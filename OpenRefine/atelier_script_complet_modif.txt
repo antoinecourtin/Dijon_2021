@@ -1,0 +1,4490 @@
+[
+  {
+    "op": "core/column-rename",
+    "description": "Rename column Dimensions\n(en cm) to Dimensions H",
+    "oldColumnName": "Dimensions\n(en cm)",
+    "newColumnName": "Dimensions H"
+  },
+  {
+    "op": "core/column-rename",
+    "description": "Rename column Column to Dimensions L",
+    "oldColumnName": "Column",
+    "newColumnName": "Dimensions L"
+  },
+  {
+    "op": "core/column-rename",
+    "description": "Rename column Nommage fichiers d’archivage\n(TIFF) to TIFF première image",
+    "oldColumnName": "Nommage fichiers d’archivage\n(TIFF)",
+    "newColumnName": "TIFF première image"
+  },
+  {
+    "op": "core/column-removal",
+    "description": "Remove column Column2",
+    "columnName": "Column2"
+  },
+  {
+    "op": "core/column-removal",
+    "description": "Remove column TIFF première image",
+    "columnName": "TIFF première image"
+  },
+  {
+    "op": "core/column-rename",
+    "description": "Rename column Nommage fichiers de diffusion\n(JPEG) to JPG première image",
+    "oldColumnName": "Nommage fichiers de diffusion\n(JPEG)",
+    "newColumnName": "JPG première image"
+  },
+  {
+    "op": "core/column-rename",
+    "description": "Rename column Column3 to JPG dernière image",
+    "oldColumnName": "Column3",
+    "newColumnName": "JPG dernière image"
+  },
+  {
+    "op": "core/column-removal",
+    "description": "Remove column Répertoire d’enregistrement",
+    "columnName": "Répertoire d’enregistrement"
+  },
+  {
+    "op": "core/column-removal",
+    "description": "Remove column Nom d’image de référence",
+    "columnName": "Nom d’image de référence"
+  },
+  {
+    "op": "core/column-removal",
+    "description": "Remove column observations",
+    "columnName": "observations"
+  },
+  {
+    "op": "core/text-transform",
+    "description": "Text transform on cells in column Pièce/Dossier using expression value.toString()",
+    "engineConfig": {
+      "facets": [],
+      "mode": "record-based"
+    },
+    "columnName": "Pièce/Dossier",
+    "expression": "value.toString()",
+    "onError": "keep-original",
+    "repeat": false,
+    "repeatCount": 10
+  },
+  {
+    "op": "core/text-transform",
+    "description": "Text transform on cells in column Pièce/Dossier using expression grel:value.replace(\".0\",\"\")",
+    "engineConfig": {
+      "facets": [],
+      "mode": "record-based"
+    },
+    "columnName": "Pièce/Dossier",
+    "expression": "grel:value.replace(\".0\",\"\")",
+    "onError": "keep-original",
+    "repeat": false,
+    "repeatCount": 10
+  },
+  {
+    "op": "core/row-removal",
+    "description": "Remove rows",
+    "engineConfig": {
+      "facets": [
+        {
+          "type": "list",
+          "name": "Lignes marquées",
+          "expression": "row.flagged.toString()",
+          "columnName": "",
+          "invert": false,
+          "selection": [
+            {
+              "v": {
+                "v": "true",
+                "l": "true"
+              }
+            }
+          ],
+          "selectNumber": false,
+          "selectDateTime": false,
+          "selectBoolean": false,
+          "omitBlank": false,
+          "selectBlank": false,
+          "omitError": false,
+          "selectError": false
+        }
+      ],
+      "mode": "row-based"
+    }
+  },
+  {
+    "op": "core/column-addition",
+    "description": "Create column annee at index 5 based on column Intitulé / Description using expression grel:value.match(/.*(\\d{4}).*?/)[0]",
+    "engineConfig": {
+      "facets": [],
+      "mode": "row-based"
+    },
+    "newColumnName": "annee",
+    "columnInsertIndex": 5,
+    "baseColumnName": "Intitulé / Description",
+    "expression": "grel:value.match(/.*(\\d{4}).*?/)[0]",
+    "onError": "set-to-blank"
+  },
+  {
+    "op": "core/column-addition",
+    "description": "Create column dimensions at index 7 based on column Dimensions H using expression grel:value + \" x \" + cells[\"Dimensions L\"].value",
+    "engineConfig": {
+      "facets": [],
+      "mode": "row-based"
+    },
+    "newColumnName": "dimensions",
+    "columnInsertIndex": 7,
+    "baseColumnName": "Dimensions H",
+    "expression": "grel:value + \" x \" + cells[\"Dimensions L\"].value",
+    "onError": "set-to-blank"
+  },
+  {
+    "op": "core/text-transform",
+    "description": "Text transform on cells in column dimensions using expression grel:value.replace(\".0\",\"\")",
+    "engineConfig": {
+      "facets": [],
+      "mode": "row-based"
+    },
+    "columnName": "dimensions",
+    "expression": "grel:value.replace(\".0\",\"\")",
+    "onError": "keep-original",
+    "repeat": false,
+    "repeatCount": 10
+  },
+  {
+    "op": "core/column-addition",
+    "description": "Create column lieu at index 5 based on column Intitulé / Description using expression grel:\"musée du Louvre\"",
+    "engineConfig": {
+      "facets": [
+        {
+          "name": "Intitulé / Description",
+          "columnName": "Intitulé / Description",
+          "query": "Louvre",
+          "mode": "text",
+          "caseSensitive": false,
+          "invert": false,
+          "type": "text"
+        }
+      ],
+      "mode": "row-based"
+    },
+    "newColumnName": "lieu",
+    "columnInsertIndex": 5,
+    "baseColumnName": "Intitulé / Description",
+    "expression": "grel:\"musée du Louvre\"",
+    "onError": "set-to-blank"
+  },
+  {
+    "op": "core/text-transform",
+    "description": "Text transform on cells in column lieu using expression grel:\"château de Chambord\"",
+    "engineConfig": {
+      "facets": [
+        {
+          "name": "Intitulé / Description",
+          "columnName": "Intitulé / Description",
+          "query": "chambord",
+          "mode": "text",
+          "caseSensitive": false,
+          "invert": false,
+          "type": "text"
+        }
+      ],
+      "mode": "row-based"
+    },
+    "columnName": "lieu",
+    "expression": "grel:\"château de Chambord\"",
+    "onError": "keep-original",
+    "repeat": false,
+    "repeatCount": 10
+  },
+  {
+    "op": "core/mass-edit",
+    "description": "Mass edit cells in column lieu",
+    "engineConfig": {
+      "facets": [
+        {
+          "type": "list",
+          "name": "lieu",
+          "expression": "value",
+          "columnName": "lieu",
+          "invert": false,
+          "selection": [],
+          "selectNumber": false,
+          "selectDateTime": false,
+          "selectBoolean": false,
+          "omitBlank": false,
+          "selectBlank": true,
+          "omitError": false,
+          "selectError": false
+        },
+        {
+          "name": "Intitulé / Description",
+          "columnName": "Intitulé / Description",
+          "query": "Sourches",
+          "mode": "text",
+          "caseSensitive": false,
+          "invert": false,
+          "type": "text"
+        }
+      ],
+      "mode": "row-based"
+    },
+    "columnName": "lieu",
+    "expression": "value",
+    "edits": [
+      {
+        "fromBlank": true,
+        "fromError": false,
+        "from": [
+          ""
+        ],
+        "to": "\"château de Sourches\""
+      }
+    ]
+  },
+  {
+    "op": "core/mass-edit",
+    "description": "Mass edit cells in column lieu",
+    "engineConfig": {
+      "facets": [
+        {
+          "name": "Intitulé / Description",
+          "columnName": "Intitulé / Description",
+          "query": "",
+          "mode": "text",
+          "caseSensitive": false,
+          "invert": false,
+          "type": "text"
+        }
+      ],
+      "mode": "row-based"
+    },
+    "columnName": "lieu",
+    "expression": "value",
+    "edits": [
+      {
+        "fromBlank": false,
+        "fromError": false,
+        "from": [
+          "\"château de Sourches\""
+        ],
+        "to": "château de Sourches"
+      }
+    ]
+  },
+  {
+    "op": "core/mass-edit",
+    "description": "Mass edit cells in column lieu",
+    "engineConfig": {
+      "facets": [
+        {
+          "type": "list",
+          "name": "lieu",
+          "expression": "value",
+          "columnName": "lieu",
+          "invert": false,
+          "selection": [],
+          "selectNumber": false,
+          "selectDateTime": false,
+          "selectBoolean": false,
+          "omitBlank": false,
+          "selectBlank": true,
+          "omitError": false,
+          "selectError": false
+        },
+        {
+          "name": "Intitulé / Description",
+          "columnName": "Intitulé / Description",
+          "query": "",
+          "mode": "text",
+          "caseSensitive": false,
+          "invert": false,
+          "type": "text"
+        },
+        {
+          "type": "list",
+          "name": "Intitulé / Description",
+          "expression": "value.split(' ')",
+          "columnName": "Intitulé / Description",
+          "invert": false,
+          "selection": [
+            {
+              "v": {
+                "v": "(Loire)",
+                "l": "(Loire)"
+              }
+            }
+          ],
+          "selectNumber": false,
+          "selectDateTime": false,
+          "selectBoolean": false,
+          "omitBlank": false,
+          "selectBlank": false,
+          "omitError": false,
+          "selectError": false
+        }
+      ],
+      "mode": "row-based"
+    },
+    "columnName": "lieu",
+    "expression": "value",
+    "edits": [
+      {
+        "fromBlank": true,
+        "fromError": false,
+        "from": [
+          ""
+        ],
+        "to": "Château de  La Bastie d'Urfé "
+      }
+    ]
+  },
+  {
+    "op": "core/mass-edit",
+    "description": "Mass edit cells in column lieu",
+    "engineConfig": {
+      "facets": [
+        {
+          "type": "list",
+          "name": "lieu",
+          "expression": "value",
+          "columnName": "lieu",
+          "invert": false,
+          "selection": [],
+          "selectNumber": false,
+          "selectDateTime": false,
+          "selectBoolean": false,
+          "omitBlank": false,
+          "selectBlank": true,
+          "omitError": false,
+          "selectError": false
+        },
+        {
+          "name": "Intitulé / Description",
+          "columnName": "Intitulé / Description",
+          "query": "",
+          "mode": "text",
+          "caseSensitive": false,
+          "invert": false,
+          "type": "text"
+        },
+        {
+          "type": "list",
+          "name": "Intitulé / Description",
+          "expression": "value.split(' ')",
+          "columnName": "Intitulé / Description",
+          "invert": false,
+          "selection": [
+            {
+              "v": {
+                "v": "Saint-Céré",
+                "l": "Saint-Céré"
+              }
+            }
+          ],
+          "selectNumber": false,
+          "selectDateTime": false,
+          "selectBoolean": false,
+          "omitBlank": false,
+          "selectBlank": false,
+          "omitError": false,
+          "selectError": false
+        }
+      ],
+      "mode": "row-based"
+    },
+    "columnName": "lieu",
+    "expression": "value",
+    "edits": [
+      {
+        "fromBlank": true,
+        "fromError": false,
+        "from": [
+          ""
+        ],
+        "to": "Saint-Céré"
+      }
+    ]
+  },
+  {
+    "op": "core/mass-edit",
+    "description": "Mass edit cells in column lieu",
+    "engineConfig": {
+      "facets": [
+        {
+          "type": "list",
+          "name": "lieu",
+          "expression": "value",
+          "columnName": "lieu",
+          "invert": false,
+          "selection": [],
+          "selectNumber": false,
+          "selectDateTime": false,
+          "selectBoolean": false,
+          "omitBlank": false,
+          "selectBlank": true,
+          "omitError": false,
+          "selectError": false
+        },
+        {
+          "name": "Intitulé / Description",
+          "columnName": "Intitulé / Description",
+          "query": "Vayr",
+          "mode": "text",
+          "caseSensitive": false,
+          "invert": false,
+          "type": "text"
+        },
+        {
+          "type": "list",
+          "name": "Intitulé / Description",
+          "expression": "value.split(' ')",
+          "columnName": "Intitulé / Description",
+          "invert": false,
+          "selection": [
+            {
+              "v": {
+                "v": "(Lot),",
+                "l": "(Lot),"
+              }
+            }
+          ],
+          "selectNumber": false,
+          "selectDateTime": false,
+          "selectBoolean": false,
+          "omitBlank": false,
+          "selectBlank": false,
+          "omitError": false,
+          "selectError": false
+        }
+      ],
+      "mode": "row-based"
+    },
+    "columnName": "lieu",
+    "expression": "value",
+    "edits": [
+      {
+        "fromBlank": true,
+        "fromError": false,
+        "from": [
+          ""
+        ],
+        "to": "Vayrac"
+      }
+    ]
+  },
+  {
+    "op": "core/mass-edit",
+    "description": "Mass edit cells in column lieu",
+    "engineConfig": {
+      "facets": [
+        {
+          "type": "list",
+          "name": "lieu",
+          "expression": "value",
+          "columnName": "lieu",
+          "invert": false,
+          "selection": [],
+          "selectNumber": false,
+          "selectDateTime": false,
+          "selectBoolean": false,
+          "omitBlank": false,
+          "selectBlank": true,
+          "omitError": false,
+          "selectError": false
+        },
+        {
+          "name": "Intitulé / Description",
+          "columnName": "Intitulé / Description",
+          "query": "Mont",
+          "mode": "text",
+          "caseSensitive": false,
+          "invert": false,
+          "type": "text"
+        },
+        {
+          "type": "list",
+          "name": "Intitulé / Description",
+          "expression": "value.split(' ')",
+          "columnName": "Intitulé / Description",
+          "invert": false,
+          "selection": [
+            {
+              "v": {
+                "v": "Château",
+                "l": "Château"
+              }
+            }
+          ],
+          "selectNumber": false,
+          "selectDateTime": false,
+          "selectBoolean": false,
+          "omitBlank": false,
+          "selectBlank": false,
+          "omitError": false,
+          "selectError": false
+        }
+      ],
+      "mode": "row-based"
+    },
+    "columnName": "lieu",
+    "expression": "value",
+    "edits": [
+      {
+        "fromBlank": true,
+        "fromError": false,
+        "from": [
+          ""
+        ],
+        "to": "Château de Montal"
+      }
+    ]
+  },
+  {
+    "op": "core/column-addition",
+    "description": "Create column lieu 1 at index 5 based on column Intitulé / Description using expression grel:smartSplit(value, ' ')[0] + \" \" + smartSplit(value, ' ')[1] + \" \" + smartSplit(value, ' ')[2] + \" \" + smartSplit(value, ' ')[3]",
+    "engineConfig": {
+      "facets": [
+        {
+          "type": "list",
+          "name": "lieu",
+          "expression": "value",
+          "columnName": "lieu",
+          "invert": false,
+          "selection": [],
+          "selectNumber": false,
+          "selectDateTime": false,
+          "selectBoolean": false,
+          "omitBlank": false,
+          "selectBlank": true,
+          "omitError": false,
+          "selectError": false
+        },
+        {
+          "type": "list",
+          "name": "Intitulé / Description",
+          "expression": "value.split(' ')",
+          "columnName": "Intitulé / Description",
+          "invert": false,
+          "selection": [
+            {
+              "v": {
+                "v": "Château",
+                "l": "Château"
+              }
+            }
+          ],
+          "selectNumber": false,
+          "selectDateTime": false,
+          "selectBoolean": false,
+          "omitBlank": false,
+          "selectBlank": false,
+          "omitError": false,
+          "selectError": false
+        }
+      ],
+      "mode": "row-based"
+    },
+    "newColumnName": "lieu 1",
+    "columnInsertIndex": 5,
+    "baseColumnName": "Intitulé / Description",
+    "expression": "grel:smartSplit(value, ' ')[0] + \" \" + smartSplit(value, ' ')[1] + \" \" + smartSplit(value, ' ')[2] + \" \" + smartSplit(value, ' ')[3]",
+    "onError": "set-to-blank"
+  },
+  {
+    "op": "core/text-transform",
+    "description": "Text transform on cells in column lieu using expression grel:cells[\"lieu 1\"].value",
+    "engineConfig": {
+      "facets": [
+        {
+          "type": "list",
+          "name": "lieu",
+          "expression": "value",
+          "columnName": "lieu",
+          "invert": false,
+          "selection": [],
+          "selectNumber": false,
+          "selectDateTime": false,
+          "selectBoolean": false,
+          "omitBlank": false,
+          "selectBlank": true,
+          "omitError": false,
+          "selectError": false
+        },
+        {
+          "type": "list",
+          "name": "Intitulé / Description",
+          "expression": "value.split(' ')",
+          "columnName": "Intitulé / Description",
+          "invert": false,
+          "selection": [
+            {
+              "v": {
+                "v": "Château",
+                "l": "Château"
+              }
+            }
+          ],
+          "selectNumber": false,
+          "selectDateTime": false,
+          "selectBoolean": false,
+          "omitBlank": false,
+          "selectBlank": false,
+          "omitError": false,
+          "selectError": false
+        }
+      ],
+      "mode": "row-based"
+    },
+    "columnName": "lieu",
+    "expression": "grel:cells[\"lieu 1\"].value",
+    "onError": "keep-original",
+    "repeat": false,
+    "repeatCount": 10
+  },
+  {
+    "op": "core/column-removal",
+    "description": "Remove column lieu 1",
+    "columnName": "lieu 1"
+  },
+  {
+    "op": "core/mass-edit",
+    "description": "Mass edit cells in column lieu",
+    "engineConfig": {
+      "facets": [
+        {
+          "type": "list",
+          "name": "lieu",
+          "expression": "value",
+          "columnName": "lieu",
+          "invert": false,
+          "selection": [],
+          "selectNumber": false,
+          "selectDateTime": false,
+          "selectBoolean": false,
+          "omitBlank": false,
+          "selectBlank": true,
+          "omitError": false,
+          "selectError": false
+        },
+        {
+          "name": "Intitulé / Description",
+          "columnName": "Intitulé / Description",
+          "query": "Montau",
+          "mode": "text",
+          "caseSensitive": true,
+          "invert": false,
+          "type": "text"
+        }
+      ],
+      "mode": "row-based"
+    },
+    "columnName": "lieu",
+    "expression": "value",
+    "edits": [
+      {
+        "fromBlank": true,
+        "fromError": false,
+        "from": [
+          ""
+        ],
+        "to": "Montauban"
+      }
+    ]
+  },
+  {
+    "op": "core/mass-edit",
+    "description": "Mass edit cells in column lieu",
+    "engineConfig": {
+      "facets": [
+        {
+          "type": "list",
+          "name": "lieu",
+          "expression": "value",
+          "columnName": "lieu",
+          "invert": false,
+          "selection": [],
+          "selectNumber": false,
+          "selectDateTime": false,
+          "selectBoolean": false,
+          "omitBlank": false,
+          "selectBlank": true,
+          "omitError": false,
+          "selectError": false
+        },
+        {
+          "name": "Intitulé / Description",
+          "columnName": "Intitulé / Description",
+          "query": "",
+          "mode": "text",
+          "caseSensitive": true,
+          "invert": false,
+          "type": "text"
+        },
+        {
+          "name": "Pièce/Dossier",
+          "columnName": "Pièce/Dossier",
+          "query": "jeu",
+          "mode": "text",
+          "caseSensitive": false,
+          "invert": false,
+          "type": "text"
+        }
+      ],
+      "mode": "row-based"
+    },
+    "columnName": "lieu",
+    "expression": "value",
+    "edits": [
+      {
+        "fromBlank": true,
+        "fromError": false,
+        "from": [
+          ""
+        ],
+        "to": "Jeu de paume (musée)"
+      }
+    ]
+  },
+  {
+    "op": "core/column-split",
+    "description": "Split column Intitulé / Description by separator",
+    "engineConfig": {
+      "facets": [
+        {
+          "name": "Intitulé / Description",
+          "columnName": "Intitulé / Description",
+          "query": ". ",
+          "mode": "text",
+          "caseSensitive": false,
+          "invert": false,
+          "type": "text"
+        }
+      ],
+      "mode": "row-based"
+    },
+    "columnName": "Intitulé / Description",
+    "guessCellType": true,
+    "removeOriginalColumn": false,
+    "mode": "separator",
+    "separator": ". ",
+    "regex": false,
+    "maxColumns": 2
+  },
+  {
+    "op": "core/text-transform",
+    "description": "Text transform on cells in column Intitulé / Description using expression grel:cells[\"Intitulé / Description 1\"].value",
+    "engineConfig": {
+      "facets": [
+        {
+          "name": "Intitulé / Description",
+          "columnName": "Intitulé / Description",
+          "query": ". ",
+          "mode": "text",
+          "caseSensitive": false,
+          "invert": false,
+          "type": "text"
+        }
+      ],
+      "mode": "row-based"
+    },
+    "columnName": "Intitulé / Description",
+    "expression": "grel:cells[\"Intitulé / Description 1\"].value",
+    "onError": "keep-original",
+    "repeat": false,
+    "repeatCount": 10
+  },
+  {
+    "op": "core/column-removal",
+    "description": "Remove column Intitulé / Description 1",
+    "columnName": "Intitulé / Description 1"
+  },
+  {
+    "op": "core/text-transform",
+    "description": "Text transform on cells in column Intitulé / Description using expression grel:value + \". \" + cells[\"Intitulé / Description 2\"].value",
+    "engineConfig": {
+      "facets": [
+        {
+          "type": "range",
+          "name": "Intitulé / Description 2",
+          "expression": "value.length()",
+          "columnName": "Intitulé / Description 2",
+          "from": 30,
+          "to": 130,
+          "selectNumeric": true,
+          "selectNonNumeric": true,
+          "selectError": true,
+          "selectBlank": true
+        },
+        {
+          "name": "Intitulé / Description 2",
+          "columnName": "Intitulé / Description 2",
+          "query": "clich",
+          "mode": "text",
+          "caseSensitive": false,
+          "invert": true,
+          "type": "text"
+        },
+        {
+          "name": "Intitulé / Description 2",
+          "columnName": "Intitulé / Description 2",
+          "query": "tira",
+          "mode": "text",
+          "caseSensitive": false,
+          "invert": true,
+          "type": "text"
+        }
+      ],
+      "mode": "row-based"
+    },
+    "columnName": "Intitulé / Description",
+    "expression": "grel:value + \". \" + cells[\"Intitulé / Description 2\"].value",
+    "onError": "keep-original",
+    "repeat": false,
+    "repeatCount": 10
+  },
+  {
+    "op": "core/text-transform",
+    "description": "Text transform on cells in column Intitulé / Description 2 using expression \"\"",
+    "engineConfig": {
+      "facets": [
+        {
+          "type": "range",
+          "name": "Intitulé / Description 2",
+          "expression": "value.length()",
+          "columnName": "Intitulé / Description 2",
+          "from": 30,
+          "to": 130,
+          "selectNumeric": true,
+          "selectNonNumeric": true,
+          "selectError": true,
+          "selectBlank": true
+        },
+        {
+          "name": "Intitulé / Description 2",
+          "columnName": "Intitulé / Description 2",
+          "query": "clich",
+          "mode": "text",
+          "caseSensitive": false,
+          "invert": true,
+          "type": "text"
+        },
+        {
+          "name": "Intitulé / Description 2",
+          "columnName": "Intitulé / Description 2",
+          "query": "tira",
+          "mode": "text",
+          "caseSensitive": false,
+          "invert": true,
+          "type": "text"
+        }
+      ],
+      "mode": "row-based"
+    },
+    "columnName": "Intitulé / Description 2",
+    "expression": "\"\"",
+    "onError": "keep-original",
+    "repeat": false,
+    "repeatCount": 10
+  },
+  {
+    "op": "core/column-split",
+    "description": "Split column Intitulé / Description 2 by separator",
+    "engineConfig": {
+      "facets": [
+        {
+          "name": "Intitulé / Description 2",
+          "columnName": "Intitulé / Description 2",
+          "query": "cliché",
+          "mode": "text",
+          "caseSensitive": false,
+          "invert": false,
+          "type": "text"
+        }
+      ],
+      "mode": "row-based"
+    },
+    "columnName": "Intitulé / Description 2",
+    "guessCellType": true,
+    "removeOriginalColumn": true,
+    "mode": "separator",
+    "separator": "cliché",
+    "regex": false,
+    "maxColumns": 2
+  },
+  {
+    "op": "core/column-rename",
+    "description": "Rename column Intitulé / Description 2 2 to photographe",
+    "oldColumnName": "Intitulé / Description 2 2",
+    "newColumnName": "photographe"
+  },
+  {
+    "op": "core/text-transform",
+    "description": "Text transform on cells in column photographe using expression grel:value.replace(\"s de\",\"\")",
+    "engineConfig": {
+      "facets": [
+        {
+          "name": "Intitulé / Description 2",
+          "columnName": "Intitulé / Description 2",
+          "query": "cliché",
+          "mode": "text",
+          "caseSensitive": false,
+          "invert": false,
+          "type": "text"
+        }
+      ],
+      "mode": "row-based"
+    },
+    "columnName": "photographe",
+    "expression": "grel:value.replace(\"s de\",\"\")",
+    "onError": "keep-original",
+    "repeat": false,
+    "repeatCount": 10
+  },
+  {
+    "op": "core/text-transform",
+    "description": "Text transform on cells in column photographe using expression grel:value.replace(\"s \",\"\")",
+    "engineConfig": {
+      "facets": [
+        {
+          "name": "Intitulé / Description 2",
+          "columnName": "Intitulé / Description 2",
+          "query": "cliché",
+          "mode": "text",
+          "caseSensitive": false,
+          "invert": false,
+          "type": "text"
+        }
+      ],
+      "mode": "row-based"
+    },
+    "columnName": "photographe",
+    "expression": "grel:value.replace(\"s \",\"\")",
+    "onError": "keep-original",
+    "repeat": false,
+    "repeatCount": 10
+  },
+  {
+    "op": "core/column-rename",
+    "description": "Rename column Intitulé / Description 2 1 to tirages",
+    "oldColumnName": "Intitulé / Description 2 1",
+    "newColumnName": "tirages"
+  },
+  {
+    "op": "core/text-transform",
+    "description": "Text transform on cells in column photographe using expression grel:cells[\"tirages\"].value",
+    "engineConfig": {
+      "facets": [
+        {
+          "type": "list",
+          "name": "photographe",
+          "expression": "isBlank(value).toString()",
+          "columnName": "photographe",
+          "invert": false,
+          "selection": [
+            {
+              "v": {
+                "v": "true",
+                "l": "true"
+              }
+            }
+          ],
+          "selectNumber": false,
+          "selectDateTime": false,
+          "selectBoolean": false,
+          "omitBlank": false,
+          "selectBlank": false,
+          "omitError": false,
+          "selectError": false
+        },
+        {
+          "name": "Intitulé / Description 2 1",
+          "columnName": "Intitulé / Description 2 1",
+          "query": "cliché",
+          "mode": "text",
+          "caseSensitive": false,
+          "invert": false,
+          "type": "text"
+        },
+        {
+          "name": "Intitulé / Description 2 1",
+          "columnName": "Intitulé / Description 2 1",
+          "query": "tirage",
+          "mode": "text",
+          "caseSensitive": false,
+          "invert": true,
+          "type": "text"
+        }
+      ],
+      "mode": "row-based"
+    },
+    "columnName": "photographe",
+    "expression": "grel:cells[\"tirages\"].value",
+    "onError": "keep-original",
+    "repeat": false,
+    "repeatCount": 10
+  },
+  {
+    "op": "core/mass-edit",
+    "description": "Mass edit cells in column tirages",
+    "engineConfig": {
+      "facets": [
+        {
+          "type": "list",
+          "name": "photographe",
+          "expression": "isBlank(value).toString()",
+          "columnName": "photographe",
+          "invert": false,
+          "selection": [
+            {
+              "v": {
+                "v": "false",
+                "l": "false"
+              }
+            }
+          ],
+          "selectNumber": false,
+          "selectDateTime": false,
+          "selectBoolean": false,
+          "omitBlank": false,
+          "selectBlank": false,
+          "omitError": false,
+          "selectError": false
+        },
+        {
+          "name": "tirages",
+          "columnName": "tirages",
+          "query": "tirage",
+          "mode": "text",
+          "caseSensitive": false,
+          "invert": false,
+          "type": "text"
+        }
+      ],
+      "mode": "row-based"
+    },
+    "columnName": "tirages",
+    "expression": "value",
+    "edits": [
+      {
+        "fromBlank": false,
+        "fromError": false,
+        "from": [
+          "Clichés Pierre Jahan,1945. 5 tirages"
+        ],
+        "to": "5 tirages"
+      }
+    ]
+  },
+  {
+    "op": "core/text-transform",
+    "description": "Text transform on cells in column tirages using expression value.toString()",
+    "engineConfig": {
+      "facets": [
+        {
+          "type": "list",
+          "name": "photographe",
+          "expression": "isBlank(value).toString()",
+          "columnName": "photographe",
+          "invert": false,
+          "selection": [
+            {
+              "v": {
+                "v": "false",
+                "l": "false"
+              }
+            }
+          ],
+          "selectNumber": false,
+          "selectDateTime": false,
+          "selectBoolean": false,
+          "omitBlank": false,
+          "selectBlank": false,
+          "omitError": false,
+          "selectError": false
+        },
+        {
+          "name": "tirages",
+          "columnName": "tirages",
+          "query": "tirage",
+          "mode": "text",
+          "caseSensitive": false,
+          "invert": true,
+          "type": "text"
+        }
+      ],
+      "mode": "row-based"
+    },
+    "columnName": "tirages",
+    "expression": "value.toString()",
+    "onError": "keep-original",
+    "repeat": false,
+    "repeatCount": 10
+  },
+  {
+    "op": "core/mass-edit",
+    "description": "Mass edit cells in column tirages",
+    "engineConfig": {
+      "facets": [
+        {
+          "type": "list",
+          "name": "photographe",
+          "expression": "isBlank(value).toString()",
+          "columnName": "photographe",
+          "invert": false,
+          "selection": [
+            {
+              "v": {
+                "v": "false",
+                "l": "false"
+              }
+            }
+          ],
+          "selectNumber": false,
+          "selectDateTime": false,
+          "selectBoolean": false,
+          "omitBlank": false,
+          "selectBlank": false,
+          "omitError": false,
+          "selectError": false
+        },
+        {
+          "name": "tirages",
+          "columnName": "tirages",
+          "query": "tirage",
+          "mode": "text",
+          "caseSensitive": false,
+          "invert": true,
+          "type": "text"
+        }
+      ],
+      "mode": "row-based"
+    },
+    "columnName": "tirages",
+    "expression": "value",
+    "edits": [
+      {
+        "fromBlank": false,
+        "fromError": false,
+        "from": [
+          "2"
+        ],
+        "to": "2 clichés"
+      }
+    ]
+  },
+  {
+    "op": "core/mass-edit",
+    "description": "Mass edit cells in column tirages",
+    "engineConfig": {
+      "facets": [
+        {
+          "type": "list",
+          "name": "photographe",
+          "expression": "isBlank(value).toString()",
+          "columnName": "photographe",
+          "invert": false,
+          "selection": [
+            {
+              "v": {
+                "v": "false",
+                "l": "false"
+              }
+            }
+          ],
+          "selectNumber": false,
+          "selectDateTime": false,
+          "selectBoolean": false,
+          "omitBlank": false,
+          "selectBlank": false,
+          "omitError": false,
+          "selectError": false
+        },
+        {
+          "name": "tirages",
+          "columnName": "tirages",
+          "query": "tirage",
+          "mode": "text",
+          "caseSensitive": false,
+          "invert": true,
+          "type": "text"
+        }
+      ],
+      "mode": "row-based"
+    },
+    "columnName": "tirages",
+    "expression": "value",
+    "edits": [
+      {
+        "fromBlank": false,
+        "fromError": false,
+        "from": [
+          "3"
+        ],
+        "to": "3 clichés"
+      }
+    ]
+  },
+  {
+    "op": "core/mass-edit",
+    "description": "Mass edit cells in column tirages",
+    "engineConfig": {
+      "facets": [
+        {
+          "type": "list",
+          "name": "photographe",
+          "expression": "isBlank(value).toString()",
+          "columnName": "photographe",
+          "invert": false,
+          "selection": [
+            {
+              "v": {
+                "v": "false",
+                "l": "false"
+              }
+            }
+          ],
+          "selectNumber": false,
+          "selectDateTime": false,
+          "selectBoolean": false,
+          "omitBlank": false,
+          "selectBlank": false,
+          "omitError": false,
+          "selectError": false
+        },
+        {
+          "name": "tirages",
+          "columnName": "tirages",
+          "query": "tirage",
+          "mode": "text",
+          "caseSensitive": false,
+          "invert": true,
+          "type": "text"
+        }
+      ],
+      "mode": "row-based"
+    },
+    "columnName": "tirages",
+    "expression": "value",
+    "edits": [
+      {
+        "fromBlank": false,
+        "fromError": false,
+        "from": [
+          "4"
+        ],
+        "to": "4 clichés"
+      }
+    ]
+  },
+  {
+    "op": "core/mass-edit",
+    "description": "Mass edit cells in column tirages",
+    "engineConfig": {
+      "facets": [
+        {
+          "type": "list",
+          "name": "photographe",
+          "expression": "isBlank(value).toString()",
+          "columnName": "photographe",
+          "invert": false,
+          "selection": [
+            {
+              "v": {
+                "v": "false",
+                "l": "false"
+              }
+            }
+          ],
+          "selectNumber": false,
+          "selectDateTime": false,
+          "selectBoolean": false,
+          "omitBlank": false,
+          "selectBlank": false,
+          "omitError": false,
+          "selectError": false
+        },
+        {
+          "name": "tirages",
+          "columnName": "tirages",
+          "query": "tirage",
+          "mode": "text",
+          "caseSensitive": false,
+          "invert": true,
+          "type": "text"
+        }
+      ],
+      "mode": "row-based"
+    },
+    "columnName": "tirages",
+    "expression": "value",
+    "edits": [
+      {
+        "fromBlank": false,
+        "fromError": false,
+        "from": [
+          "7 Clichés Alexandre Séarl"
+        ],
+        "to": "7 Clichés"
+      }
+    ]
+  },
+  {
+    "op": "core/text-transform",
+    "description": "Text transform on cells in column tirages using expression \"\"",
+    "engineConfig": {
+      "facets": [
+        {
+          "type": "list",
+          "name": "photographe",
+          "expression": "isBlank(value).toString()",
+          "columnName": "photographe",
+          "invert": false,
+          "selection": [
+            {
+              "v": {
+                "v": "false",
+                "l": "false"
+              }
+            }
+          ],
+          "selectNumber": false,
+          "selectDateTime": false,
+          "selectBoolean": false,
+          "omitBlank": false,
+          "selectBlank": false,
+          "omitError": false,
+          "selectError": false
+        },
+        {
+          "name": "tirages",
+          "columnName": "tirages",
+          "query": "tirage",
+          "mode": "text",
+          "caseSensitive": false,
+          "invert": true,
+          "type": "text"
+        },
+        {
+          "type": "list",
+          "name": "tirages",
+          "expression": "value",
+          "columnName": "tirages",
+          "invert": true,
+          "selection": [
+            {
+              "v": {
+                "v": "2 clichés",
+                "l": "2 clichés"
+              }
+            },
+            {
+              "v": {
+                "v": "3 clichés",
+                "l": "3 clichés"
+              }
+            },
+            {
+              "v": {
+                "v": "4 clichés",
+                "l": "4 clichés"
+              }
+            },
+            {
+              "v": {
+                "v": "7 Clichés",
+                "l": "7 Clichés"
+              }
+            }
+          ],
+          "selectNumber": false,
+          "selectDateTime": false,
+          "selectBoolean": false,
+          "omitBlank": false,
+          "selectBlank": false,
+          "omitError": false,
+          "selectError": false
+        }
+      ],
+      "mode": "row-based"
+    },
+    "columnName": "tirages",
+    "expression": "\"\"",
+    "onError": "keep-original",
+    "repeat": false,
+    "repeatCount": 10
+  },
+  {
+    "op": "core/column-split",
+    "description": "Split column tirages by separator",
+    "engineConfig": {
+      "facets": [
+        {
+          "type": "list",
+          "name": "photographe",
+          "expression": "isBlank(value).toString()",
+          "columnName": "photographe",
+          "invert": false,
+          "selection": [
+            {
+              "v": {
+                "v": "false",
+                "l": "false"
+              }
+            }
+          ],
+          "selectNumber": false,
+          "selectDateTime": false,
+          "selectBoolean": false,
+          "omitBlank": false,
+          "selectBlank": false,
+          "omitError": false,
+          "selectError": false
+        },
+        {
+          "name": "tirages",
+          "columnName": "tirages",
+          "query": ". ",
+          "mode": "text",
+          "caseSensitive": false,
+          "invert": false,
+          "type": "text"
+        }
+      ],
+      "mode": "row-based"
+    },
+    "columnName": "tirages",
+    "guessCellType": true,
+    "removeOriginalColumn": false,
+    "mode": "separator",
+    "separator": ". ",
+    "regex": false,
+    "maxColumns": 2
+  },
+  {
+    "op": "core/text-transform",
+    "description": "Text transform on cells in column photographe using expression grel:cells[\"tirages 1\"].value",
+    "engineConfig": {
+      "facets": [
+        {
+          "type": "list",
+          "name": "photographe",
+          "expression": "isBlank(value).toString()",
+          "columnName": "photographe",
+          "invert": false,
+          "selection": [
+            {
+              "v": {
+                "v": "false",
+                "l": "false"
+              }
+            }
+          ],
+          "selectNumber": false,
+          "selectDateTime": false,
+          "selectBoolean": false,
+          "omitBlank": false,
+          "selectBlank": false,
+          "omitError": false,
+          "selectError": false
+        },
+        {
+          "name": "tirages",
+          "columnName": "tirages",
+          "query": ". ",
+          "mode": "text",
+          "caseSensitive": false,
+          "invert": false,
+          "type": "text"
+        }
+      ],
+      "mode": "row-based"
+    },
+    "columnName": "photographe",
+    "expression": "grel:cells[\"tirages 1\"].value",
+    "onError": "keep-original",
+    "repeat": false,
+    "repeatCount": 10
+  },
+  {
+    "op": "core/text-transform",
+    "description": "Text transform on cells in column tirages using expression grel:cells[\"tirages 2\"].value",
+    "engineConfig": {
+      "facets": [
+        {
+          "type": "list",
+          "name": "photographe",
+          "expression": "isBlank(value).toString()",
+          "columnName": "photographe",
+          "invert": false,
+          "selection": [
+            {
+              "v": {
+                "v": "false",
+                "l": "false"
+              }
+            }
+          ],
+          "selectNumber": false,
+          "selectDateTime": false,
+          "selectBoolean": false,
+          "omitBlank": false,
+          "selectBlank": false,
+          "omitError": false,
+          "selectError": false
+        },
+        {
+          "name": "tirages",
+          "columnName": "tirages",
+          "query": ". ",
+          "mode": "text",
+          "caseSensitive": false,
+          "invert": false,
+          "type": "text"
+        }
+      ],
+      "mode": "row-based"
+    },
+    "columnName": "tirages",
+    "expression": "grel:cells[\"tirages 2\"].value",
+    "onError": "keep-original",
+    "repeat": false,
+    "repeatCount": 10
+  },
+  {
+    "op": "core/text-transform",
+    "description": "Text transform on cells in column tirages using expression grel:value.replace(\" d’après des \",\"\")",
+    "engineConfig": {
+      "facets": [
+        {
+          "name": "tirages",
+          "columnName": "tirages",
+          "query": "",
+          "mode": "text",
+          "caseSensitive": false,
+          "invert": false,
+          "type": "text"
+        }
+      ],
+      "mode": "row-based"
+    },
+    "columnName": "tirages",
+    "expression": "grel:value.replace(\" d’après des \",\"\")",
+    "onError": "keep-original",
+    "repeat": false,
+    "repeatCount": 10
+  },
+  {
+    "op": "core/column-removal",
+    "description": "Remove column tirages 1",
+    "columnName": "tirages 1"
+  },
+  {
+    "op": "core/column-removal",
+    "description": "Remove column tirages 2",
+    "columnName": "tirages 2"
+  },
+  {
+    "op": "core/mass-edit",
+    "description": "Mass edit cells in column tirages",
+    "engineConfig": {
+      "facets": [
+        {
+          "name": "tirages",
+          "columnName": "tirages",
+          "query": "",
+          "mode": "text",
+          "caseSensitive": false,
+          "invert": false,
+          "type": "text"
+        }
+      ],
+      "mode": "row-based"
+    },
+    "columnName": "tirages",
+    "expression": "value",
+    "edits": [
+      {
+        "fromBlank": false,
+        "fromError": false,
+        "from": [
+          "Tirage d’après un "
+        ],
+        "to": ""
+      }
+    ]
+  },
+  {
+    "op": "core/text-transform",
+    "description": "Text transform on cells in column photographe using expression grel:value.replace(\"Clichés \",\"\")",
+    "engineConfig": {
+      "facets": [],
+      "mode": "row-based"
+    },
+    "columnName": "photographe",
+    "expression": "grel:value.replace(\"Clichés \",\"\")",
+    "onError": "keep-original",
+    "repeat": false,
+    "repeatCount": 10
+  },
+  {
+    "op": "core/text-transform",
+    "description": "Text transform on cells in column photographe using expression grel:value.replace(\"Cliché \",\"\")",
+    "engineConfig": {
+      "facets": [],
+      "mode": "row-based"
+    },
+    "columnName": "photographe",
+    "expression": "grel:value.replace(\"Cliché \",\"\")",
+    "onError": "keep-original",
+    "repeat": false,
+    "repeatCount": 10
+  },
+  {
+    "op": "core/mass-edit",
+    "description": "Mass edit cells in column annee",
+    "engineConfig": {
+      "facets": [
+        {
+          "type": "list",
+          "name": "photographe",
+          "expression": "value",
+          "columnName": "photographe",
+          "invert": false,
+          "selection": [
+            {
+              "v": {
+                "v": "Vizzavona, Agraci et Franceschi (1947-1958).",
+                "l": "Vizzavona, Agraci et Franceschi (1947-1958)."
+              }
+            }
+          ],
+          "selectNumber": false,
+          "selectDateTime": false,
+          "selectBoolean": false,
+          "omitBlank": false,
+          "selectBlank": false,
+          "omitError": false,
+          "selectError": false
+        },
+        {
+          "name": "photographe",
+          "columnName": "photographe",
+          "query": "-",
+          "mode": "text",
+          "caseSensitive": false,
+          "invert": false,
+          "type": "text"
+        }
+      ],
+      "mode": "row-based"
+    },
+    "columnName": "annee",
+    "expression": "value",
+    "edits": [
+      {
+        "fromBlank": false,
+        "fromError": false,
+        "from": [
+          "1958"
+        ],
+        "to": "1947-1958"
+      }
+    ]
+  },
+  {
+    "op": "core/mass-edit",
+    "description": "Mass edit cells in column annee",
+    "engineConfig": {
+      "facets": [
+        {
+          "type": "list",
+          "name": "photographe",
+          "expression": "value",
+          "columnName": "photographe",
+          "invert": false,
+          "selection": [
+            {
+              "v": {
+                "v": "Vizzavona et Agraci (1947-1958).",
+                "l": "Vizzavona et Agraci (1947-1958)."
+              }
+            }
+          ],
+          "selectNumber": false,
+          "selectDateTime": false,
+          "selectBoolean": false,
+          "omitBlank": false,
+          "selectBlank": false,
+          "omitError": false,
+          "selectError": false
+        },
+        {
+          "name": "photographe",
+          "columnName": "photographe",
+          "query": "-",
+          "mode": "text",
+          "caseSensitive": false,
+          "invert": false,
+          "type": "text"
+        }
+      ],
+      "mode": "row-based"
+    },
+    "columnName": "annee",
+    "expression": "value",
+    "edits": [
+      {
+        "fromBlank": false,
+        "fromError": false,
+        "from": [
+          "1958"
+        ],
+        "to": "1947-1958"
+      }
+    ]
+  },
+  {
+    "op": "core/mass-edit",
+    "description": "Mass edit cells in column annee",
+    "engineConfig": {
+      "facets": [
+        {
+          "type": "list",
+          "name": "photographe",
+          "expression": "value",
+          "columnName": "photographe",
+          "invert": false,
+          "selection": [
+            {
+              "v": {
+                "v": "Agraci et Franceschi (1947-1959)",
+                "l": "Agraci et Franceschi (1947-1959)"
+              }
+            }
+          ],
+          "selectNumber": false,
+          "selectDateTime": false,
+          "selectBoolean": false,
+          "omitBlank": false,
+          "selectBlank": false,
+          "omitError": false,
+          "selectError": false
+        },
+        {
+          "name": "photographe",
+          "columnName": "photographe",
+          "query": "-",
+          "mode": "text",
+          "caseSensitive": false,
+          "invert": false,
+          "type": "text"
+        }
+      ],
+      "mode": "row-based"
+    },
+    "columnName": "annee",
+    "expression": "value",
+    "edits": [
+      {
+        "fromBlank": false,
+        "fromError": false,
+        "from": [
+          "1959"
+        ],
+        "to": "1947-1959"
+      }
+    ]
+  },
+  {
+    "op": "core/mass-edit",
+    "description": "Mass edit cells in column photographe",
+    "engineConfig": {
+      "facets": [],
+      "mode": "row-based"
+    },
+    "columnName": "photographe",
+    "expression": "value",
+    "edits": [
+      {
+        "fromBlank": false,
+        "fromError": false,
+        "from": [
+          "Vizzavona et Agraci (1947-1958).",
+          "Vizzavona et Agraci (1947-1958). "
+        ],
+        "to": "Vizzavona et Agraci"
+      },
+      {
+        "fromBlank": false,
+        "fromError": false,
+        "from": [
+          "Réunion des musées nationaux (mars 1969)",
+          "Réunion des musées nationaux (mars 1969)."
+        ],
+        "to": "Réunion des musées nationaux"
+      }
+    ]
+  },
+  {
+    "op": "core/mass-edit",
+    "description": "Mass edit cells in column photographe",
+    "engineConfig": {
+      "facets": [],
+      "mode": "row-based"
+    },
+    "columnName": "photographe",
+    "expression": "value",
+    "edits": [
+      {
+        "fromBlank": false,
+        "fromError": false,
+        "from": [
+          "Agraci (1958)",
+          "Agraci (1858)"
+        ],
+        "to": "Agraci"
+      }
+    ]
+  },
+  {
+    "op": "core/mass-edit",
+    "description": "Mass edit cells in column photographe",
+    "engineConfig": {
+      "facets": [],
+      "mode": "row-based"
+    },
+    "columnName": "photographe",
+    "expression": "value",
+    "edits": [
+      {
+        "fromBlank": false,
+        "fromError": false,
+        "from": [
+          "Vizzavona et Agraci",
+          "Vizzavona et Agraci (1969)"
+        ],
+        "to": "Vizzavona et Agraci"
+      },
+      {
+        "fromBlank": false,
+        "fromError": false,
+        "from": [
+          "Alexandre Séarl",
+          "7 Alexandre Séarl"
+        ],
+        "to": "Alexandre Séarl"
+      },
+      {
+        "fromBlank": false,
+        "fromError": false,
+        "from": [
+          "Vizzavona, Agraci et Franceschi (1947-1958).",
+          "Vizzavona, Agraci et Franceschi(1947-158)."
+        ],
+        "to": "Vizzavona, Agraci et Franceschi (1947-1958)."
+      },
+      {
+        "fromBlank": false,
+        "fromError": false,
+        "from": [
+          " Marc Vaux",
+          " de Marc Vaux"
+        ],
+        "to": " Marc Vaux"
+      },
+      {
+        "fromBlank": false,
+        "fromError": false,
+        "from": [
+          "Vizzavona (1958)",
+          "Vizzavona (1947-1958)"
+        ],
+        "to": "Vizzavona (1958)"
+      }
+    ]
+  },
+  {
+    "op": "core/mass-edit",
+    "description": "Mass edit cells in column photographe",
+    "engineConfig": {
+      "facets": [
+        {
+          "name": "photographe",
+          "columnName": "photographe",
+          "query": "(",
+          "mode": "text",
+          "caseSensitive": false,
+          "invert": false,
+          "type": "text"
+        }
+      ],
+      "mode": "row-based"
+    },
+    "columnName": "photographe",
+    "expression": "value",
+    "edits": [
+      {
+        "fromBlank": false,
+        "fromError": false,
+        "from": [
+          "Vizzavona (1958)"
+        ],
+        "to": "Vizzavona"
+      }
+    ]
+  },
+  {
+    "op": "core/mass-edit",
+    "description": "Mass edit cells in column photographe",
+    "engineConfig": {
+      "facets": [
+        {
+          "name": "photographe",
+          "columnName": "photographe",
+          "query": "(",
+          "mode": "text",
+          "caseSensitive": false,
+          "invert": false,
+          "type": "text"
+        }
+      ],
+      "mode": "row-based"
+    },
+    "columnName": "photographe",
+    "expression": "value",
+    "edits": [
+      {
+        "fromBlank": false,
+        "fromError": false,
+        "from": [
+          "Vizzavona, Agraci et Franceschi (1947-1958)."
+        ],
+        "to": "Vizzavona, Agraci et Franceschi"
+      }
+    ]
+  },
+  {
+    "op": "core/mass-edit",
+    "description": "Mass edit cells in column photographe",
+    "engineConfig": {
+      "facets": [
+        {
+          "name": "photographe",
+          "columnName": "photographe",
+          "query": "(",
+          "mode": "text",
+          "caseSensitive": false,
+          "invert": false,
+          "type": "text"
+        }
+      ],
+      "mode": "row-based"
+    },
+    "columnName": "photographe",
+    "expression": "value",
+    "edits": [
+      {
+        "fromBlank": false,
+        "fromError": false,
+        "from": [
+          "Vizzavona (1947)"
+        ],
+        "to": "Vizzavona"
+      }
+    ]
+  },
+  {
+    "op": "core/mass-edit",
+    "description": "Mass edit cells in column photographe",
+    "engineConfig": {
+      "facets": [
+        {
+          "name": "photographe",
+          "columnName": "photographe",
+          "query": "(",
+          "mode": "text",
+          "caseSensitive": false,
+          "invert": false,
+          "type": "text"
+        }
+      ],
+      "mode": "row-based"
+    },
+    "columnName": "photographe",
+    "expression": "value",
+    "edits": [
+      {
+        "fromBlank": false,
+        "fromError": false,
+        "from": [
+          "Agraci et Franceschi (1947-1959)"
+        ],
+        "to": "Agraci et Franceschi"
+      }
+    ]
+  },
+  {
+    "op": "core/mass-edit",
+    "description": "Mass edit cells in column photographe",
+    "engineConfig": {
+      "facets": [
+        {
+          "name": "photographe",
+          "columnName": "photographe",
+          "query": "(",
+          "mode": "text",
+          "caseSensitive": false,
+          "invert": false,
+          "type": "text"
+        }
+      ],
+      "mode": "row-based"
+    },
+    "columnName": "photographe",
+    "expression": "value",
+    "edits": [
+      {
+        "fromBlank": false,
+        "fromError": false,
+        "from": [
+          "Vizzavona et Agraci (1958-1961)"
+        ],
+        "to": "Vizzavona et Agraci"
+      }
+    ]
+  },
+  {
+    "op": "core/mass-edit",
+    "description": "Mass edit cells in column photographe",
+    "engineConfig": {
+      "facets": [
+        {
+          "type": "list",
+          "name": "photographe",
+          "expression": "value",
+          "columnName": "photographe",
+          "invert": false,
+          "selection": [
+            {
+              "v": {
+                "v": "s",
+                "l": "s"
+              }
+            },
+            {
+              "v": {
+                "v": "Le Louvre vide »",
+                "l": "Le Louvre vide »"
+              }
+            }
+          ],
+          "selectNumber": false,
+          "selectDateTime": false,
+          "selectBoolean": false,
+          "omitBlank": false,
+          "selectBlank": false,
+          "omitError": false,
+          "selectError": false
+        }
+      ],
+      "mode": "row-based"
+    },
+    "columnName": "photographe",
+    "expression": "value",
+    "edits": [
+      {
+        "fromBlank": false,
+        "fromError": false,
+        "from": [
+          "s"
+        ],
+        "to": ""
+      }
+    ]
+  },
+  {
+    "op": "core/text-transform",
+    "description": "Text transform on cells in column Intitulé / Description using expression value.trim()",
+    "engineConfig": {
+      "facets": [],
+      "mode": "row-based"
+    },
+    "columnName": "Intitulé / Description",
+    "expression": "value.trim()",
+    "onError": "keep-original",
+    "repeat": false,
+    "repeatCount": 10
+  },
+  {
+    "op": "core/text-transform",
+    "description": "Text transform on cells in column Intitulé / Description using expression value.replace(/\\s+/,' ')",
+    "engineConfig": {
+      "facets": [],
+      "mode": "row-based"
+    },
+    "columnName": "Intitulé / Description",
+    "expression": "value.replace(/\\s+/,' ')",
+    "onError": "keep-original",
+    "repeat": false,
+    "repeatCount": 10
+  },
+  {
+    "op": "core/text-transform",
+    "description": "Text transform on cells in column photographe using expression value.trim()",
+    "engineConfig": {
+      "facets": [],
+      "mode": "row-based"
+    },
+    "columnName": "photographe",
+    "expression": "value.trim()",
+    "onError": "keep-original",
+    "repeat": false,
+    "repeatCount": 10
+  },
+  {
+    "op": "core/text-transform",
+    "description": "Text transform on cells in column photographe using expression value.replace(/\\s+/,' ')",
+    "engineConfig": {
+      "facets": [],
+      "mode": "row-based"
+    },
+    "columnName": "photographe",
+    "expression": "value.replace(/\\s+/,' ')",
+    "onError": "keep-original",
+    "repeat": false,
+    "repeatCount": 10
+  },
+  {
+    "op": "core/recon",
+    "description": "Reconcile cells in column photographe to type Q5",
+    "columnName": "photographe",
+    "config": {
+      "mode": "standard-service",
+      "service": "https://tools.wmflabs.org/openrefine-wikidata/fr/api",
+      "identifierSpace": "http://www.wikidata.org/entity/",
+      "schemaSpace": "http://www.wikidata.org/prop/direct/",
+      "type": {
+        "id": "Q5",
+        "name": "être humain"
+      },
+      "autoMatch": true,
+      "columnDetails": [],
+      "limit": 0
+    },
+    "engineConfig": {
+      "facets": [
+        {
+          "type": "list",
+          "name": "photographe",
+          "expression": "isBlank(value).toString()",
+          "columnName": "photographe",
+          "invert": false,
+          "selection": [
+            {
+              "v": {
+                "v": "false",
+                "l": "false"
+              }
+            }
+          ],
+          "selectNumber": false,
+          "selectDateTime": false,
+          "selectBoolean": false,
+          "omitBlank": false,
+          "selectBlank": false,
+          "omitError": false,
+          "selectError": false
+        }
+      ],
+      "mode": "row-based"
+    }
+  },
+  {
+    "op": "core/recon-judge-similar-cells",
+    "description": "Match item Marc Vaux (Q3288463) for cells containing \"Marc Vaux\" in column photographe",
+    "engineConfig": {
+      "facets": [
+        {
+          "type": "list",
+          "name": "photographe",
+          "expression": "isBlank(value).toString()",
+          "columnName": "photographe",
+          "invert": false,
+          "selection": [
+            {
+              "v": {
+                "v": "false",
+                "l": "false"
+              }
+            }
+          ],
+          "selectNumber": false,
+          "selectDateTime": false,
+          "selectBoolean": false,
+          "omitBlank": false,
+          "selectBlank": false,
+          "omitError": false,
+          "selectError": false
+        },
+        {
+          "type": "range",
+          "name": "photographe: best candidate's score",
+          "expression": "cell.recon.best.score",
+          "columnName": "photographe",
+          "from": 92,
+          "to": 101,
+          "selectNumeric": true,
+          "selectNonNumeric": true,
+          "selectError": true,
+          "selectBlank": true
+        }
+      ],
+      "mode": "row-based"
+    },
+    "columnName": "photographe",
+    "similarValue": "Marc Vaux",
+    "judgment": "matched",
+    "match": {
+      "id": "Q3288463",
+      "name": "Marc Vaux",
+      "score": 100,
+      "types": [
+        "Q5"
+      ]
+    },
+    "shareNewTopics": false
+  },
+  {
+    "op": "core/recon-judge-similar-cells",
+    "description": "Mark to create one single new item for all cells containing \"Alexandre Séarl\" in column photographe",
+    "engineConfig": {
+      "facets": [
+        {
+          "type": "list",
+          "name": "photographe",
+          "expression": "isBlank(value).toString()",
+          "columnName": "photographe",
+          "invert": false,
+          "selection": [
+            {
+              "v": {
+                "v": "false",
+                "l": "false"
+              }
+            }
+          ],
+          "selectNumber": false,
+          "selectDateTime": false,
+          "selectBoolean": false,
+          "omitBlank": false,
+          "selectBlank": false,
+          "omitError": false,
+          "selectError": false
+        },
+        {
+          "type": "list",
+          "name": "photographe: judgment",
+          "expression": "forNonBlank(cell.recon.judgment, v, v, if(isNonBlank(value), \"(unreconciled)\", \"(blank)\"))",
+          "columnName": "photographe",
+          "invert": false,
+          "selection": [
+            {
+              "v": {
+                "v": "none",
+                "l": "none"
+              }
+            }
+          ],
+          "selectNumber": false,
+          "selectDateTime": false,
+          "selectBoolean": false,
+          "omitBlank": false,
+          "selectBlank": false,
+          "omitError": false,
+          "selectError": false
+        },
+        {
+          "type": "range",
+          "name": "photographe: best candidate's score",
+          "expression": "cell.recon.best.score",
+          "columnName": "photographe",
+          "from": 92,
+          "to": 101,
+          "selectNumeric": true,
+          "selectNonNumeric": true,
+          "selectError": true,
+          "selectBlank": true
+        }
+      ],
+      "mode": "row-based"
+    },
+    "columnName": "photographe",
+    "similarValue": "Alexandre Séarl",
+    "judgment": "new",
+    "shareNewTopics": true
+  },
+  {
+    "op": "core/recon-judge-similar-cells",
+    "description": "Match item Paul Almásy (Q138740) for cells containing \"Almasy\" in column photographe",
+    "engineConfig": {
+      "facets": [
+        {
+          "type": "list",
+          "name": "photographe",
+          "expression": "isBlank(value).toString()",
+          "columnName": "photographe",
+          "invert": false,
+          "selection": [
+            {
+              "v": {
+                "v": "false",
+                "l": "false"
+              }
+            }
+          ],
+          "selectNumber": false,
+          "selectDateTime": false,
+          "selectBoolean": false,
+          "omitBlank": false,
+          "selectBlank": false,
+          "omitError": false,
+          "selectError": false
+        },
+        {
+          "type": "list",
+          "name": "photographe: judgment",
+          "expression": "forNonBlank(cell.recon.judgment, v, v, if(isNonBlank(value), \"(unreconciled)\", \"(blank)\"))",
+          "columnName": "photographe",
+          "invert": false,
+          "selection": [
+            {
+              "v": {
+                "v": "none",
+                "l": "none"
+              }
+            }
+          ],
+          "selectNumber": false,
+          "selectDateTime": false,
+          "selectBoolean": false,
+          "omitBlank": false,
+          "selectBlank": false,
+          "omitError": false,
+          "selectError": false
+        }
+      ],
+      "mode": "row-based"
+    },
+    "columnName": "photographe",
+    "similarValue": "Almasy",
+    "judgment": "matched",
+    "match": {
+      "id": "Q138740",
+      "name": "Paul Almásy",
+      "score": 100,
+      "types": [
+        ""
+      ]
+    },
+    "shareNewTopics": false
+  },
+  {
+    "op": "core/recon-judge-similar-cells",
+    "description": "Match item François Antoine Vizzavona (Q3083829) for cells containing \"Vizzavona\" in column photographe",
+    "engineConfig": {
+      "facets": [
+        {
+          "type": "list",
+          "name": "photographe",
+          "expression": "isBlank(value).toString()",
+          "columnName": "photographe",
+          "invert": false,
+          "selection": [
+            {
+              "v": {
+                "v": "false",
+                "l": "false"
+              }
+            }
+          ],
+          "selectNumber": false,
+          "selectDateTime": false,
+          "selectBoolean": false,
+          "omitBlank": false,
+          "selectBlank": false,
+          "omitError": false,
+          "selectError": false
+        },
+        {
+          "type": "list",
+          "name": "photographe: judgment",
+          "expression": "forNonBlank(cell.recon.judgment, v, v, if(isNonBlank(value), \"(unreconciled)\", \"(blank)\"))",
+          "columnName": "photographe",
+          "invert": false,
+          "selection": [
+            {
+              "v": {
+                "v": "none",
+                "l": "none"
+              }
+            }
+          ],
+          "selectNumber": false,
+          "selectDateTime": false,
+          "selectBoolean": false,
+          "omitBlank": false,
+          "selectBlank": false,
+          "omitError": false,
+          "selectError": false
+        }
+      ],
+      "mode": "row-based"
+    },
+    "columnName": "photographe",
+    "similarValue": "Vizzavona",
+    "judgment": "matched",
+    "match": {
+      "id": "Q3083829",
+      "name": "François Antoine Vizzavona",
+      "score": 51,
+      "types": [
+        "Q5"
+      ]
+    },
+    "shareNewTopics": false
+  },
+  {
+    "op": "core/recon-judge-similar-cells",
+    "description": "Match item Réunion des musées nationaux (Q13360245) for cells containing \"Réunion des musées nationaux\" in column photographe",
+    "engineConfig": {
+      "facets": [
+        {
+          "type": "list",
+          "name": "photographe",
+          "expression": "isBlank(value).toString()",
+          "columnName": "photographe",
+          "invert": false,
+          "selection": [
+            {
+              "v": {
+                "v": "false",
+                "l": "false"
+              }
+            }
+          ],
+          "selectNumber": false,
+          "selectDateTime": false,
+          "selectBoolean": false,
+          "omitBlank": false,
+          "selectBlank": false,
+          "omitError": false,
+          "selectError": false
+        },
+        {
+          "type": "list",
+          "name": "photographe: judgment",
+          "expression": "forNonBlank(cell.recon.judgment, v, v, if(isNonBlank(value), \"(unreconciled)\", \"(blank)\"))",
+          "columnName": "photographe",
+          "invert": false,
+          "selection": [
+            {
+              "v": {
+                "v": "none",
+                "l": "none"
+              }
+            }
+          ],
+          "selectNumber": false,
+          "selectDateTime": false,
+          "selectBoolean": false,
+          "omitBlank": false,
+          "selectBlank": false,
+          "omitError": false,
+          "selectError": false
+        }
+      ],
+      "mode": "row-based"
+    },
+    "columnName": "photographe",
+    "similarValue": "Réunion des musées nationaux",
+    "judgment": "matched",
+    "match": {
+      "id": "Q13360245",
+      "name": "Réunion des musées nationaux",
+      "score": 100,
+      "types": [
+        ""
+      ]
+    },
+    "shareNewTopics": false
+  },
+  {
+    "op": "core/extend-reconciled-data",
+    "description": "Extend data at index 7 based on column photographe",
+    "engineConfig": {
+      "facets": [
+        {
+          "type": "list",
+          "name": "photographe: judgment",
+          "expression": "forNonBlank(cell.recon.judgment, v, v, if(isNonBlank(value), \"(unreconciled)\", \"(blank)\"))",
+          "columnName": "photographe",
+          "invert": false,
+          "selection": [
+            {
+              "v": {
+                "v": "matched",
+                "l": "matched"
+              }
+            }
+          ],
+          "selectNumber": false,
+          "selectDateTime": false,
+          "selectBoolean": false,
+          "omitBlank": false,
+          "selectBlank": false,
+          "omitError": false,
+          "selectError": false
+        }
+      ],
+      "mode": "row-based"
+    },
+    "columnInsertIndex": 7,
+    "baseColumnName": "photographe",
+    "endpoint": "https://tools.wmflabs.org/openrefine-wikidata/fr/api",
+    "identifierSpace": "http://www.wikidata.org/entity/",
+    "schemaSpace": "http://www.wikidata.org/prop/direct/",
+    "extension": {
+      "properties": [
+        {
+          "name": "date de naissance",
+          "id": "P569"
+        },
+        {
+          "name": "date de mort",
+          "id": "P570"
+        }
+      ]
+    }
+  },
+  {
+    "op": "core/column-addition",
+    "description": "Create column fr_wiki at index 7 based on column photographe using expression jython:import json\nimport urllib2\n\nlangs = [\"fr\", \"en\", \"de\", \"nl\"]  # ordered list of languages you want to try until there is a match\n\nvalue = cell.recon.match.id\n\nfor lang in langs:\n\n    wiki = lang + \"wiki\"\n\n    url = (\"https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&props=sitelinks/urls&ids=\" +\n           value +\n           \"&sitefilter=\" +\n           wiki)\n \n    response = urllib2.urlopen(url)\n\n    if response:\n        data = json.loads(response.read())\n\n        for i in data['entities'].values():\n            try:\n                return i['sitelinks'][wiki]['url']\n            except:\n                pass",
+    "engineConfig": {
+      "facets": [
+        {
+          "type": "list",
+          "name": "photographe: judgment",
+          "expression": "forNonBlank(cell.recon.judgment, v, v, if(isNonBlank(value), \"(unreconciled)\", \"(blank)\"))",
+          "columnName": "photographe",
+          "invert": false,
+          "selection": [
+            {
+              "v": {
+                "v": "matched",
+                "l": "matched"
+              }
+            }
+          ],
+          "selectNumber": false,
+          "selectDateTime": false,
+          "selectBoolean": false,
+          "omitBlank": false,
+          "selectBlank": false,
+          "omitError": false,
+          "selectError": false
+        }
+      ],
+      "mode": "row-based"
+    },
+    "newColumnName": "fr_wiki",
+    "columnInsertIndex": 7,
+    "baseColumnName": "photographe",
+    "expression": "jython:import json\nimport urllib2\n\nlangs = [\"fr\", \"en\", \"de\", \"nl\"]  # ordered list of languages you want to try until there is a match\n\nvalue = cell.recon.match.id\n\nfor lang in langs:\n\n    wiki = lang + \"wiki\"\n\n    url = (\"https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&props=sitelinks/urls&ids=\" +\n           value +\n           \"&sitefilter=\" +\n           wiki)\n \n    response = urllib2.urlopen(url)\n\n    if response:\n        data = json.loads(response.read())\n\n        for i in data['entities'].values():\n            try:\n                return i['sitelinks'][wiki]['url']\n            except:\n                pass",
+    "onError": "set-to-blank"
+  },
+  {
+    "op": "core/column-addition-by-fetching-urls",
+    "description": "Create column geoloc at index 11 by fetching URLs based on column lieu using expression grel:\"http://maps.google.com/maps/api/geocode/json?sensor=false&address=\" + escape(value, \"url\")",
+    "engineConfig": {
+      "facets": [
+        {
+          "type": "list",
+          "name": "photographe: judgment",
+          "expression": "forNonBlank(cell.recon.judgment, v, v, if(isNonBlank(value), \"(unreconciled)\", \"(blank)\"))",
+          "columnName": "photographe",
+          "invert": false,
+          "selection": [
+            {
+              "v": {
+                "v": "matched",
+                "l": "matched"
+              }
+            }
+          ],
+          "selectNumber": false,
+          "selectDateTime": false,
+          "selectBoolean": false,
+          "omitBlank": false,
+          "selectBlank": false,
+          "omitError": false,
+          "selectError": false
+        }
+      ],
+      "mode": "row-based"
+    },
+    "newColumnName": "geoloc",
+    "columnInsertIndex": 11,
+    "baseColumnName": "lieu",
+    "urlExpression": "grel:\"http://maps.google.com/maps/api/geocode/json?sensor=false&address=\" + escape(value, \"url\")",
+    "onError": "set-to-blank",
+    "delay": 5000,
+    "cacheResponses": true,
+    "httpHeadersJson": [
+      {
+        "name": "authorization",
+        "value": ""
+      },
+      {
+        "name": "user-agent",
+        "value": "OpenRefine 3.1 [b90e413]"
+      },
+      {
+        "name": "accept",
+        "value": "*/*"
+      }
+    ]
+  },
+  {
+    "op": "core/column-removal",
+    "description": "Remove column geoloc",
+    "columnName": "geoloc"
+  },
+  {
+    "op": "core/column-addition-by-fetching-urls",
+    "description": "Create column geoloc at index 11 by fetching URLs based on column lieu using expression grel:\"http://maps.googleapis.com/maps/api/geocode/json?sensor=false&address=\"+escape(value,\"url\")",
+    "engineConfig": {
+      "facets": [
+        {
+          "type": "list",
+          "name": "lieu",
+          "expression": "isBlank(value).toString()",
+          "columnName": "lieu",
+          "invert": false,
+          "selection": [
+            {
+              "v": {
+                "v": "false",
+                "l": "false"
+              }
+            }
+          ],
+          "selectNumber": false,
+          "selectDateTime": false,
+          "selectBoolean": false,
+          "omitBlank": false,
+          "selectBlank": false,
+          "omitError": false,
+          "selectError": false
+        }
+      ],
+      "mode": "row-based"
+    },
+    "newColumnName": "geoloc",
+    "columnInsertIndex": 11,
+    "baseColumnName": "lieu",
+    "urlExpression": "grel:\"http://maps.googleapis.com/maps/api/geocode/json?sensor=false&address=\"+escape(value,\"url\")",
+    "onError": "set-to-blank",
+    "delay": 5000,
+    "cacheResponses": true,
+    "httpHeadersJson": [
+      {
+        "name": "authorization",
+        "value": ""
+      },
+      {
+        "name": "user-agent",
+        "value": "OpenRefine 3.1 [b90e413]"
+      },
+      {
+        "name": "accept",
+        "value": "*/*"
+      }
+    ]
+  },
+  {
+    "op": "core/column-removal",
+    "description": "Remove column geoloc",
+    "columnName": "geoloc"
+  },
+  {
+    "op": "core/column-addition-by-fetching-urls",
+    "description": "Create column geoloc at index 11 by fetching URLs based on column lieu using expression grel:\"https://api-adresse.data.gouv.fr/search/?q=8+bd+du+port(value,\"url\")",
+    "engineConfig": {
+      "facets": [
+        {
+          "type": "list",
+          "name": "lieu",
+          "expression": "isBlank(value).toString()",
+          "columnName": "lieu",
+          "invert": false,
+          "selection": [
+            {
+              "v": {
+                "v": "false",
+                "l": "false"
+              }
+            }
+          ],
+          "selectNumber": false,
+          "selectDateTime": false,
+          "selectBoolean": false,
+          "omitBlank": false,
+          "selectBlank": false,
+          "omitError": false,
+          "selectError": false
+        }
+      ],
+      "mode": "row-based"
+    },
+    "newColumnName": "geoloc",
+    "columnInsertIndex": 11,
+    "baseColumnName": "lieu",
+    "urlExpression": "grel:\"https://api-adresse.data.gouv.fr/search/?q=8+bd+du+port(value,\"url\")",
+    "onError": "set-to-blank",
+    "delay": 5000,
+    "cacheResponses": true,
+    "httpHeadersJson": [
+      {
+        "name": "authorization",
+        "value": ""
+      },
+      {
+        "name": "user-agent",
+        "value": "OpenRefine 3.1 [b90e413]"
+      },
+      {
+        "name": "accept",
+        "value": "*/*"
+      }
+    ]
+  },
+  {
+    "op": "core/column-removal",
+    "description": "Remove column geoloc",
+    "columnName": "geoloc"
+  },
+  {
+    "op": "core/mass-edit",
+    "description": "Mass edit cells in column lieu",
+    "engineConfig": {
+      "facets": [
+        {
+          "type": "list",
+          "name": "lieu",
+          "expression": "isBlank(value).toString()",
+          "columnName": "lieu",
+          "invert": false,
+          "selection": [
+            {
+              "v": {
+                "v": "false",
+                "l": "false"
+              }
+            }
+          ],
+          "selectNumber": false,
+          "selectDateTime": false,
+          "selectBoolean": false,
+          "omitBlank": false,
+          "selectBlank": false,
+          "omitError": false,
+          "selectError": false
+        }
+      ],
+      "mode": "row-based"
+    },
+    "columnName": "lieu",
+    "expression": "value",
+    "edits": [
+      {
+        "fromBlank": false,
+        "fromError": false,
+        "from": [
+          "Château de  La Bastie d'Urfé ",
+          "Château de  La Bastie d'Urfé (Loire)"
+        ],
+        "to": "Château de  La Bastie d'Urfé "
+      }
+    ]
+  },
+  {
+    "op": "core/recon",
+    "description": "Reconcile cells in column lieu to type null",
+    "columnName": "lieu",
+    "config": {
+      "mode": "standard-service",
+      "service": "https://tools.wmflabs.org/openrefine-wikidata/fr/api",
+      "identifierSpace": "http://www.wikidata.org/entity/",
+      "schemaSpace": "http://www.wikidata.org/prop/direct/",
+      "type": null,
+      "autoMatch": true,
+      "columnDetails": [],
+      "limit": 0
+    },
+    "engineConfig": {
+      "facets": [
+        {
+          "type": "list",
+          "name": "lieu",
+          "expression": "isBlank(value).toString()",
+          "columnName": "lieu",
+          "invert": false,
+          "selection": [
+            {
+              "v": {
+                "v": "false",
+                "l": "false"
+              }
+            }
+          ],
+          "selectNumber": false,
+          "selectDateTime": false,
+          "selectBoolean": false,
+          "omitBlank": false,
+          "selectBlank": false,
+          "omitError": false,
+          "selectError": false
+        }
+      ],
+      "mode": "row-based"
+    }
+  },
+  {
+    "op": "core/recon-judge-similar-cells",
+    "description": "Match item musée du Louvre (Q19675) for cells containing \"musée du Louvre\" in column lieu",
+    "engineConfig": {
+      "facets": [
+        {
+          "type": "list",
+          "name": "lieu",
+          "expression": "isBlank(value).toString()",
+          "columnName": "lieu",
+          "invert": false,
+          "selection": [
+            {
+              "v": {
+                "v": "false",
+                "l": "false"
+              }
+            }
+          ],
+          "selectNumber": false,
+          "selectDateTime": false,
+          "selectBoolean": false,
+          "omitBlank": false,
+          "selectBlank": false,
+          "omitError": false,
+          "selectError": false
+        }
+      ],
+      "mode": "row-based"
+    },
+    "columnName": "lieu",
+    "similarValue": "musée du Louvre",
+    "judgment": "matched",
+    "match": {
+      "id": "Q19675",
+      "name": "musée du Louvre",
+      "score": 100,
+      "types": [
+        "Q207694",
+        "Q17431399",
+        "Q3329412"
+      ]
+    },
+    "shareNewTopics": false
+  },
+  {
+    "op": "core/recon-judge-similar-cells",
+    "description": "Match item château de Lucé (Q2969750) for cells containing \"Château du Grand Lucé\" in column lieu",
+    "engineConfig": {
+      "facets": [
+        {
+          "type": "list",
+          "name": "lieu",
+          "expression": "isBlank(value).toString()",
+          "columnName": "lieu",
+          "invert": false,
+          "selection": [
+            {
+              "v": {
+                "v": "false",
+                "l": "false"
+              }
+            }
+          ],
+          "selectNumber": false,
+          "selectDateTime": false,
+          "selectBoolean": false,
+          "omitBlank": false,
+          "selectBlank": false,
+          "omitError": false,
+          "selectError": false
+        },
+        {
+          "type": "list",
+          "name": "lieu: judgment",
+          "expression": "forNonBlank(cell.recon.judgment, v, v, if(isNonBlank(value), \"(unreconciled)\", \"(blank)\"))",
+          "columnName": "lieu",
+          "invert": false,
+          "selection": [
+            {
+              "v": {
+                "v": "none",
+                "l": "none"
+              }
+            }
+          ],
+          "selectNumber": false,
+          "selectDateTime": false,
+          "selectBoolean": false,
+          "omitBlank": false,
+          "selectBlank": false,
+          "omitError": false,
+          "selectError": false
+        }
+      ],
+      "mode": "row-based"
+    },
+    "columnName": "lieu",
+    "similarValue": "Château du Grand Lucé",
+    "judgment": "matched",
+    "match": {
+      "id": "Q2969750",
+      "name": "château de Lucé",
+      "score": 78,
+      "types": [
+        "Q23413"
+      ]
+    },
+    "shareNewTopics": false
+  },
+  {
+    "op": "core/recon-judge-similar-cells",
+    "description": "Match item abbaye de Loc-Dieu (Q1775540) for cells containing \"Château de Loc-Dieu (Aveyron)\" in column lieu",
+    "engineConfig": {
+      "facets": [
+        {
+          "type": "list",
+          "name": "lieu",
+          "expression": "isBlank(value).toString()",
+          "columnName": "lieu",
+          "invert": false,
+          "selection": [
+            {
+              "v": {
+                "v": "false",
+                "l": "false"
+              }
+            }
+          ],
+          "selectNumber": false,
+          "selectDateTime": false,
+          "selectBoolean": false,
+          "omitBlank": false,
+          "selectBlank": false,
+          "omitError": false,
+          "selectError": false
+        },
+        {
+          "type": "list",
+          "name": "lieu: judgment",
+          "expression": "forNonBlank(cell.recon.judgment, v, v, if(isNonBlank(value), \"(unreconciled)\", \"(blank)\"))",
+          "columnName": "lieu",
+          "invert": false,
+          "selection": [
+            {
+              "v": {
+                "v": "none",
+                "l": "none"
+              }
+            }
+          ],
+          "selectNumber": false,
+          "selectDateTime": false,
+          "selectBoolean": false,
+          "omitBlank": false,
+          "selectBlank": false,
+          "omitError": false,
+          "selectError": false
+        }
+      ],
+      "mode": "row-based"
+    },
+    "columnName": "lieu",
+    "similarValue": "Château de Loc-Dieu (Aveyron)",
+    "judgment": "matched",
+    "match": {
+      "id": "Q1775540",
+      "name": "abbaye de Loc-Dieu",
+      "score": 100,
+      "types": [
+        ""
+      ]
+    },
+    "shareNewTopics": false
+  },
+  {
+    "op": "core/recon-judge-similar-cells",
+    "description": "Match item Montauban (Q172593) for cells containing \"Montauban\" in column lieu",
+    "engineConfig": {
+      "facets": [
+        {
+          "type": "list",
+          "name": "lieu",
+          "expression": "isBlank(value).toString()",
+          "columnName": "lieu",
+          "invert": false,
+          "selection": [
+            {
+              "v": {
+                "v": "false",
+                "l": "false"
+              }
+            }
+          ],
+          "selectNumber": false,
+          "selectDateTime": false,
+          "selectBoolean": false,
+          "omitBlank": false,
+          "selectBlank": false,
+          "omitError": false,
+          "selectError": false
+        },
+        {
+          "type": "list",
+          "name": "lieu: judgment",
+          "expression": "forNonBlank(cell.recon.judgment, v, v, if(isNonBlank(value), \"(unreconciled)\", \"(blank)\"))",
+          "columnName": "lieu",
+          "invert": false,
+          "selection": [
+            {
+              "v": {
+                "v": "none",
+                "l": "none"
+              }
+            }
+          ],
+          "selectNumber": false,
+          "selectDateTime": false,
+          "selectBoolean": false,
+          "omitBlank": false,
+          "selectBlank": false,
+          "omitError": false,
+          "selectError": false
+        }
+      ],
+      "mode": "row-based"
+    },
+    "columnName": "lieu",
+    "similarValue": "Montauban",
+    "judgment": "matched",
+    "match": {
+      "id": "Q172593",
+      "name": "Montauban",
+      "score": 100,
+      "types": [
+        "Q484170"
+      ]
+    },
+    "shareNewTopics": false
+  },
+  {
+    "op": "core/recon-judge-similar-cells",
+    "description": "Match item château de Montal (Q2969939) for cells containing \"Château de Montal\" in column lieu",
+    "engineConfig": {
+      "facets": [
+        {
+          "type": "list",
+          "name": "lieu",
+          "expression": "isBlank(value).toString()",
+          "columnName": "lieu",
+          "invert": false,
+          "selection": [
+            {
+              "v": {
+                "v": "false",
+                "l": "false"
+              }
+            }
+          ],
+          "selectNumber": false,
+          "selectDateTime": false,
+          "selectBoolean": false,
+          "omitBlank": false,
+          "selectBlank": false,
+          "omitError": false,
+          "selectError": false
+        },
+        {
+          "type": "list",
+          "name": "lieu: judgment",
+          "expression": "forNonBlank(cell.recon.judgment, v, v, if(isNonBlank(value), \"(unreconciled)\", \"(blank)\"))",
+          "columnName": "lieu",
+          "invert": false,
+          "selection": [
+            {
+              "v": {
+                "v": "none",
+                "l": "none"
+              }
+            }
+          ],
+          "selectNumber": false,
+          "selectDateTime": false,
+          "selectBoolean": false,
+          "omitBlank": false,
+          "selectBlank": false,
+          "omitError": false,
+          "selectError": false
+        }
+      ],
+      "mode": "row-based"
+    },
+    "columnName": "lieu",
+    "similarValue": "Château de Montal",
+    "judgment": "matched",
+    "match": {
+      "id": "Q2969939",
+      "name": "château de Montal",
+      "score": 100,
+      "types": [
+        "Q23413",
+        "Q751876"
+      ]
+    },
+    "shareNewTopics": false
+  },
+  {
+    "op": "core/recon-judge-similar-cells",
+    "description": "Match item Saint-Céré (Q637612) for cells containing \"Saint-Céré\" in column lieu",
+    "engineConfig": {
+      "facets": [
+        {
+          "type": "list",
+          "name": "lieu",
+          "expression": "isBlank(value).toString()",
+          "columnName": "lieu",
+          "invert": false,
+          "selection": [
+            {
+              "v": {
+                "v": "false",
+                "l": "false"
+              }
+            }
+          ],
+          "selectNumber": false,
+          "selectDateTime": false,
+          "selectBoolean": false,
+          "omitBlank": false,
+          "selectBlank": false,
+          "omitError": false,
+          "selectError": false
+        },
+        {
+          "type": "list",
+          "name": "lieu: judgment",
+          "expression": "forNonBlank(cell.recon.judgment, v, v, if(isNonBlank(value), \"(unreconciled)\", \"(blank)\"))",
+          "columnName": "lieu",
+          "invert": false,
+          "selection": [
+            {
+              "v": {
+                "v": "none",
+                "l": "none"
+              }
+            }
+          ],
+          "selectNumber": false,
+          "selectDateTime": false,
+          "selectBoolean": false,
+          "omitBlank": false,
+          "selectBlank": false,
+          "omitError": false,
+          "selectError": false
+        }
+      ],
+      "mode": "row-based"
+    },
+    "columnName": "lieu",
+    "similarValue": "Saint-Céré",
+    "judgment": "matched",
+    "match": {
+      "id": "Q637612",
+      "name": "Saint-Céré",
+      "score": 100,
+      "types": [
+        "Q484170"
+      ]
+    },
+    "shareNewTopics": false
+  },
+  {
+    "op": "core/recon-judge-similar-cells",
+    "description": "Match item Vabres (Q242721) for cells containing \"Château de Saint-Gall (Cantal)\" in column lieu",
+    "engineConfig": {
+      "facets": [
+        {
+          "type": "list",
+          "name": "lieu",
+          "expression": "isBlank(value).toString()",
+          "columnName": "lieu",
+          "invert": false,
+          "selection": [
+            {
+              "v": {
+                "v": "false",
+                "l": "false"
+              }
+            }
+          ],
+          "selectNumber": false,
+          "selectDateTime": false,
+          "selectBoolean": false,
+          "omitBlank": false,
+          "selectBlank": false,
+          "omitError": false,
+          "selectError": false
+        },
+        {
+          "type": "list",
+          "name": "lieu: judgment",
+          "expression": "forNonBlank(cell.recon.judgment, v, v, if(isNonBlank(value), \"(unreconciled)\", \"(blank)\"))",
+          "columnName": "lieu",
+          "invert": false,
+          "selection": [
+            {
+              "v": {
+                "v": "none",
+                "l": "none"
+              }
+            }
+          ],
+          "selectNumber": false,
+          "selectDateTime": false,
+          "selectBoolean": false,
+          "omitBlank": false,
+          "selectBlank": false,
+          "omitError": false,
+          "selectError": false
+        }
+      ],
+      "mode": "row-based"
+    },
+    "columnName": "lieu",
+    "similarValue": "Château de Saint-Gall (Cantal)",
+    "judgment": "matched",
+    "match": {
+      "id": "Q242721",
+      "name": "Vabres",
+      "score": 100,
+      "types": [
+        ""
+      ]
+    },
+    "shareNewTopics": false
+  },
+  {
+    "op": "core/recon-judge-similar-cells",
+    "description": "Match item Vayrac (Q1385704) for cells containing \"Vayrac\" in column lieu",
+    "engineConfig": {
+      "facets": [
+        {
+          "type": "list",
+          "name": "lieu",
+          "expression": "isBlank(value).toString()",
+          "columnName": "lieu",
+          "invert": false,
+          "selection": [
+            {
+              "v": {
+                "v": "false",
+                "l": "false"
+              }
+            }
+          ],
+          "selectNumber": false,
+          "selectDateTime": false,
+          "selectBoolean": false,
+          "omitBlank": false,
+          "selectBlank": false,
+          "omitError": false,
+          "selectError": false
+        },
+        {
+          "type": "list",
+          "name": "lieu: judgment",
+          "expression": "forNonBlank(cell.recon.judgment, v, v, if(isNonBlank(value), \"(unreconciled)\", \"(blank)\"))",
+          "columnName": "lieu",
+          "invert": false,
+          "selection": [
+            {
+              "v": {
+                "v": "none",
+                "l": "none"
+              }
+            }
+          ],
+          "selectNumber": false,
+          "selectDateTime": false,
+          "selectBoolean": false,
+          "omitBlank": false,
+          "selectBlank": false,
+          "omitError": false,
+          "selectError": false
+        }
+      ],
+      "mode": "row-based"
+    },
+    "columnName": "lieu",
+    "similarValue": "Vayrac",
+    "judgment": "matched",
+    "match": {
+      "id": "Q1385704",
+      "name": "Vayrac",
+      "score": 100,
+      "types": [
+        "Q484170"
+      ]
+    },
+    "shareNewTopics": false
+  },
+  {
+    "op": "core/recon-judge-similar-cells",
+    "description": "Match item Bétaille (Q1332754) for cells containing \"Bétailles (Lot)\" in column lieu",
+    "engineConfig": {
+      "facets": [
+        {
+          "type": "list",
+          "name": "lieu",
+          "expression": "isBlank(value).toString()",
+          "columnName": "lieu",
+          "invert": false,
+          "selection": [
+            {
+              "v": {
+                "v": "false",
+                "l": "false"
+              }
+            }
+          ],
+          "selectNumber": false,
+          "selectDateTime": false,
+          "selectBoolean": false,
+          "omitBlank": false,
+          "selectBlank": false,
+          "omitError": false,
+          "selectError": false
+        },
+        {
+          "type": "list",
+          "name": "lieu: judgment",
+          "expression": "forNonBlank(cell.recon.judgment, v, v, if(isNonBlank(value), \"(unreconciled)\", \"(blank)\"))",
+          "columnName": "lieu",
+          "invert": false,
+          "selection": [
+            {
+              "v": {
+                "v": "none",
+                "l": "none"
+              }
+            }
+          ],
+          "selectNumber": false,
+          "selectDateTime": false,
+          "selectBoolean": false,
+          "omitBlank": false,
+          "selectBlank": false,
+          "omitError": false,
+          "selectError": false
+        }
+      ],
+      "mode": "row-based"
+    },
+    "columnName": "lieu",
+    "similarValue": "Bétailles (Lot)",
+    "judgment": "matched",
+    "match": {
+      "id": "Q1332754",
+      "name": "Bétaille",
+      "score": 76,
+      "types": [
+        "Q484170"
+      ]
+    },
+    "shareNewTopics": false
+  },
+  {
+    "op": "core/recon-judge-similar-cells",
+    "description": "Match item château de Cheverny (Q1141846) for cells containing \"Cheverny (Loir-et-Cher)\" in column lieu",
+    "engineConfig": {
+      "facets": [
+        {
+          "type": "list",
+          "name": "lieu",
+          "expression": "isBlank(value).toString()",
+          "columnName": "lieu",
+          "invert": false,
+          "selection": [
+            {
+              "v": {
+                "v": "false",
+                "l": "false"
+              }
+            }
+          ],
+          "selectNumber": false,
+          "selectDateTime": false,
+          "selectBoolean": false,
+          "omitBlank": false,
+          "selectBlank": false,
+          "omitError": false,
+          "selectError": false
+        },
+        {
+          "type": "list",
+          "name": "lieu: judgment",
+          "expression": "forNonBlank(cell.recon.judgment, v, v, if(isNonBlank(value), \"(unreconciled)\", \"(blank)\"))",
+          "columnName": "lieu",
+          "invert": false,
+          "selection": [
+            {
+              "v": {
+                "v": "none",
+                "l": "none"
+              }
+            }
+          ],
+          "selectNumber": false,
+          "selectDateTime": false,
+          "selectBoolean": false,
+          "omitBlank": false,
+          "selectBlank": false,
+          "omitError": false,
+          "selectError": false
+        }
+      ],
+      "mode": "row-based"
+    },
+    "columnName": "lieu",
+    "similarValue": "Cheverny (Loir-et-Cher)",
+    "judgment": "matched",
+    "match": {
+      "id": "Q1141846",
+      "name": "château de Cheverny",
+      "score": 70,
+      "types": [
+        "Q751876"
+      ]
+    },
+    "shareNewTopics": false
+  },
+  {
+    "op": "core/recon-judge-similar-cells",
+    "description": "Match item Valençay (Q474503) for cells containing \"Valençay\" in column lieu",
+    "engineConfig": {
+      "facets": [
+        {
+          "type": "list",
+          "name": "lieu",
+          "expression": "isBlank(value).toString()",
+          "columnName": "lieu",
+          "invert": false,
+          "selection": [
+            {
+              "v": {
+                "v": "false",
+                "l": "false"
+              }
+            }
+          ],
+          "selectNumber": false,
+          "selectDateTime": false,
+          "selectBoolean": false,
+          "omitBlank": false,
+          "selectBlank": false,
+          "omitError": false,
+          "selectError": false
+        },
+        {
+          "type": "list",
+          "name": "lieu: judgment",
+          "expression": "forNonBlank(cell.recon.judgment, v, v, if(isNonBlank(value), \"(unreconciled)\", \"(blank)\"))",
+          "columnName": "lieu",
+          "invert": false,
+          "selection": [
+            {
+              "v": {
+                "v": "none",
+                "l": "none"
+              }
+            }
+          ],
+          "selectNumber": false,
+          "selectDateTime": false,
+          "selectBoolean": false,
+          "omitBlank": false,
+          "selectBlank": false,
+          "omitError": false,
+          "selectError": false
+        }
+      ],
+      "mode": "row-based"
+    },
+    "columnName": "lieu",
+    "similarValue": "Valençay",
+    "judgment": "matched",
+    "match": {
+      "id": "Q474503",
+      "name": "Valençay",
+      "score": 100,
+      "types": [
+        "Q484170"
+      ]
+    },
+    "shareNewTopics": false
+  },
+  {
+    "op": "core/recon-judge-similar-cells",
+    "description": "Match item Saint-Jean-Lespinasse (Q748691) for cells containing \"Montal\" in column lieu",
+    "engineConfig": {
+      "facets": [
+        {
+          "type": "list",
+          "name": "lieu",
+          "expression": "isBlank(value).toString()",
+          "columnName": "lieu",
+          "invert": false,
+          "selection": [
+            {
+              "v": {
+                "v": "false",
+                "l": "false"
+              }
+            }
+          ],
+          "selectNumber": false,
+          "selectDateTime": false,
+          "selectBoolean": false,
+          "omitBlank": false,
+          "selectBlank": false,
+          "omitError": false,
+          "selectError": false
+        },
+        {
+          "type": "list",
+          "name": "lieu: judgment",
+          "expression": "forNonBlank(cell.recon.judgment, v, v, if(isNonBlank(value), \"(unreconciled)\", \"(blank)\"))",
+          "columnName": "lieu",
+          "invert": false,
+          "selection": [
+            {
+              "v": {
+                "v": "none",
+                "l": "none"
+              }
+            }
+          ],
+          "selectNumber": false,
+          "selectDateTime": false,
+          "selectBoolean": false,
+          "omitBlank": false,
+          "selectBlank": false,
+          "omitError": false,
+          "selectError": false
+        }
+      ],
+      "mode": "row-based"
+    },
+    "columnName": "lieu",
+    "similarValue": "Montal",
+    "judgment": "matched",
+    "match": {
+      "id": "Q748691",
+      "name": "Saint-Jean-Lespinasse",
+      "score": 100,
+      "types": [
+        ""
+      ]
+    },
+    "shareNewTopics": false
+  },
+  {
+    "op": "core/recon-judge-similar-cells",
+    "description": "Match item Jeu de paume (Q656296) for cells containing \"Jeu de paume (musée)\" in column lieu",
+    "engineConfig": {
+      "facets": [
+        {
+          "type": "list",
+          "name": "lieu",
+          "expression": "isBlank(value).toString()",
+          "columnName": "lieu",
+          "invert": false,
+          "selection": [
+            {
+              "v": {
+                "v": "false",
+                "l": "false"
+              }
+            }
+          ],
+          "selectNumber": false,
+          "selectDateTime": false,
+          "selectBoolean": false,
+          "omitBlank": false,
+          "selectBlank": false,
+          "omitError": false,
+          "selectError": false
+        },
+        {
+          "type": "list",
+          "name": "lieu: judgment",
+          "expression": "forNonBlank(cell.recon.judgment, v, v, if(isNonBlank(value), \"(unreconciled)\", \"(blank)\"))",
+          "columnName": "lieu",
+          "invert": false,
+          "selection": [
+            {
+              "v": {
+                "v": "none",
+                "l": "none"
+              }
+            }
+          ],
+          "selectNumber": false,
+          "selectDateTime": false,
+          "selectBoolean": false,
+          "omitBlank": false,
+          "selectBlank": false,
+          "omitError": false,
+          "selectError": false
+        }
+      ],
+      "mode": "row-based"
+    },
+    "columnName": "lieu",
+    "similarValue": "Jeu de paume (musée)",
+    "judgment": "matched",
+    "match": {
+      "id": "Q656296",
+      "name": "Jeu de paume",
+      "score": 92,
+      "types": [
+        "Q207694"
+      ]
+    },
+    "shareNewTopics": false
+  },
+  {
+    "op": "core/extend-reconciled-data",
+    "description": "Extend data at index 11 based on column lieu",
+    "engineConfig": {
+      "facets": [
+        {
+          "type": "list",
+          "name": "lieu",
+          "expression": "isBlank(value).toString()",
+          "columnName": "lieu",
+          "invert": false,
+          "selection": [
+            {
+              "v": {
+                "v": "false",
+                "l": "false"
+              }
+            }
+          ],
+          "selectNumber": false,
+          "selectDateTime": false,
+          "selectBoolean": false,
+          "omitBlank": false,
+          "selectBlank": false,
+          "omitError": false,
+          "selectError": false
+        }
+      ],
+      "mode": "row-based"
+    },
+    "columnInsertIndex": 11,
+    "baseColumnName": "lieu",
+    "endpoint": "https://tools.wmflabs.org/openrefine-wikidata/fr/api",
+    "identifierSpace": "http://www.wikidata.org/entity/",
+    "schemaSpace": "http://www.wikidata.org/prop/direct/",
+    "extension": {
+      "properties": [
+        {
+          "name": "coordonnées géographiques",
+          "id": "P625"
+        }
+      ]
+    }
+  },
+  {
+    "op": "core/text-transform",
+    "description": "Text transform on cells in column N° using expression grel:\"d_\" + value",
+    "engineConfig": {
+      "facets": [],
+      "mode": "row-based"
+    },
+    "columnName": "N°",
+    "expression": "grel:\"d_\" + value",
+    "onError": "keep-original",
+    "repeat": false,
+    "repeatCount": 10
+  },
+  {
+    "op": "core/text-transform",
+    "description": "Text transform on cells in column JPG première image using expression grel:value.replace (\".jpg\",\"\")",
+    "engineConfig": {
+      "facets": [],
+      "mode": "record-based"
+    },
+    "columnName": "JPG première image",
+    "expression": "grel:value.replace (\".jpg\",\"\")",
+    "onError": "keep-original",
+    "repeat": false,
+    "repeatCount": 10
+  },
+  {
+    "op": "core/text-transform",
+    "description": "Text transform on cells in column JPG dernière image using expression grel:value.replace (\".jpg\",\"\")",
+    "engineConfig": {
+      "facets": [
+        {
+          "type": "list",
+          "name": "Pièce/Dossier",
+          "expression": "value.split(' ')",
+          "columnName": "Pièce/Dossier",
+          "invert": false,
+          "selection": [
+            {
+              "v": {
+                "v": "Paume",
+                "l": "Paume"
+              }
+            }
+          ],
+          "selectNumber": false,
+          "selectDateTime": false,
+          "selectBoolean": false,
+          "omitBlank": false,
+          "selectBlank": false,
+          "omitError": false,
+          "selectError": false
+        }
+      ],
+      "mode": "row-based"
+    },
+    "columnName": "JPG dernière image",
+    "expression": "grel:value.replace (\".jpg\",\"\")",
+    "onError": "keep-original",
+    "repeat": false,
+    "repeatCount": 10
+  },
+  {
+    "op": "core/text-transform",
+    "description": "Text transform on cells in column Intitulé / Description using expression grel:cells[\"Pièce/Dossier\"].value",
+    "engineConfig": {
+      "facets": [
+        {
+          "name": "Pièce/Dossier",
+          "columnName": "Pièce/Dossier",
+          "query": "[0-9]",
+          "mode": "regex",
+          "caseSensitive": true,
+          "invert": true,
+          "type": "text"
+        },
+        {
+          "type": "list",
+          "name": "Intitulé / Description",
+          "expression": "isBlank(value).toString()",
+          "columnName": "Intitulé / Description",
+          "invert": false,
+          "selection": [
+            {
+              "v": {
+                "v": "true",
+                "l": "true"
+              }
+            }
+          ],
+          "selectNumber": false,
+          "selectDateTime": false,
+          "selectBoolean": false,
+          "omitBlank": false,
+          "selectBlank": false,
+          "omitError": false,
+          "selectError": false
+        },
+        {
+          "type": "list",
+          "name": "lieu",
+          "expression": "value",
+          "columnName": "lieu",
+          "invert": false,
+          "selection": [
+            {
+              "v": {
+                "v": "musée du Louvre",
+                "l": "musée du Louvre"
+              }
+            },
+            {
+              "v": {
+                "v": "Jeu de paume (musée)",
+                "l": "Jeu de paume (musée)"
+              }
+            }
+          ],
+          "selectNumber": false,
+          "selectDateTime": false,
+          "selectBoolean": false,
+          "omitBlank": false,
+          "selectBlank": false,
+          "omitError": false,
+          "selectError": false
+        }
+      ],
+      "mode": "row-based"
+    },
+    "columnName": "Intitulé / Description",
+    "expression": "grel:cells[\"Pièce/Dossier\"].value",
+    "onError": "keep-original",
+    "repeat": false,
+    "repeatCount": 10
+  },
+  {
+    "op": "core/text-transform",
+    "description": "Text transform on cells in column Intitulé / Description using expression grel:cells[\"Pièce/Dossier\"].value + \". \" + value",
+    "engineConfig": {
+      "facets": [
+        {
+          "name": "Pièce/Dossier",
+          "columnName": "Pièce/Dossier",
+          "query": "[0-9]",
+          "mode": "regex",
+          "caseSensitive": true,
+          "invert": true,
+          "type": "text"
+        },
+        {
+          "type": "list",
+          "name": "lieu",
+          "expression": "value",
+          "columnName": "lieu",
+          "invert": false,
+          "selection": [
+            {
+              "v": {
+                "v": "musée du Louvre",
+                "l": "musée du Louvre"
+              }
+            },
+            {
+              "v": {
+                "v": "Jeu de paume (musée)",
+                "l": "Jeu de paume (musée)"
+              }
+            }
+          ],
+          "selectNumber": false,
+          "selectDateTime": false,
+          "selectBoolean": false,
+          "omitBlank": false,
+          "selectBlank": false,
+          "omitError": false,
+          "selectError": false
+        }
+      ],
+      "mode": "row-based"
+    },
+    "columnName": "Intitulé / Description",
+    "expression": "grel:cells[\"Pièce/Dossier\"].value + \". \" + value",
+    "onError": "keep-original",
+    "repeat": false,
+    "repeatCount": 10
+  },
+  {
+    "op": "core/text-transform",
+    "description": "Text transform on cells in column Pièce/Dossier using expression \"\"",
+    "engineConfig": {
+      "facets": [
+        {
+          "name": "Pièce/Dossier",
+          "columnName": "Pièce/Dossier",
+          "query": "[0-9]",
+          "mode": "regex",
+          "caseSensitive": true,
+          "invert": true,
+          "type": "text"
+        },
+        {
+          "type": "list",
+          "name": "lieu",
+          "expression": "value",
+          "columnName": "lieu",
+          "invert": false,
+          "selection": [
+            {
+              "v": {
+                "v": "musée du Louvre",
+                "l": "musée du Louvre"
+              }
+            },
+            {
+              "v": {
+                "v": "Jeu de paume (musée)",
+                "l": "Jeu de paume (musée)"
+              }
+            }
+          ],
+          "selectNumber": false,
+          "selectDateTime": false,
+          "selectBoolean": false,
+          "omitBlank": false,
+          "selectBlank": false,
+          "omitError": false,
+          "selectError": false
+        }
+      ],
+      "mode": "row-based"
+    },
+    "columnName": "Pièce/Dossier",
+    "expression": "\"\"",
+    "onError": "keep-original",
+    "repeat": false,
+    "repeatCount": 10
+  },
+  {
+    "op": "core/text-transform",
+    "description": "Text transform on cells in column Intitulé / Description using expression grel:cells[\"Pièce/Dossier\"].value",
+    "engineConfig": {
+      "facets": [
+        {
+          "type": "list",
+          "name": "Pièce/Dossier",
+          "expression": "value.split(' ')",
+          "columnName": "Pièce/Dossier",
+          "invert": false,
+          "selection": [
+            {
+              "v": {
+                "v": "de",
+                "l": "de"
+              }
+            },
+            {
+              "v": {
+                "v": "Paume.",
+                "l": "Paume."
+              }
+            },
+            {
+              "v": {
+                "v": "Paume",
+                "l": "Paume"
+              }
+            },
+            {
+              "v": {
+                "v": "Clichés",
+                "l": "Clichés"
+              }
+            },
+            {
+              "v": {
+                "v": "Agraci",
+                "l": "Agraci"
+              }
+            },
+            {
+              "v": {
+                "v": "Cliché",
+                "l": "Cliché"
+              }
+            },
+            {
+              "v": {
+                "v": "janvier",
+                "l": "janvier"
+              }
+            },
+            {
+              "v": {
+                "v": "RdC",
+                "l": "RdC"
+              }
+            },
+            {
+              "v": {
+                "v": "Jeu",
+                "l": "Jeu"
+              }
+            },
+            {
+              "v": {
+                "v": "étage",
+                "l": "étage"
+              }
+            }
+          ],
+          "selectNumber": false,
+          "selectDateTime": false,
+          "selectBoolean": false,
+          "omitBlank": false,
+          "selectBlank": false,
+          "omitError": false,
+          "selectError": false
+        },
+        {
+          "type": "list",
+          "name": "Intitulé / Description",
+          "expression": "isBlank(value).toString()",
+          "columnName": "Intitulé / Description",
+          "invert": false,
+          "selection": [
+            {
+              "v": {
+                "v": "true",
+                "l": "true"
+              }
+            }
+          ],
+          "selectNumber": false,
+          "selectDateTime": false,
+          "selectBoolean": false,
+          "omitBlank": false,
+          "selectBlank": false,
+          "omitError": false,
+          "selectError": false
+        },
+        {
+          "type": "list",
+          "name": "lieu",
+          "expression": "value",
+          "columnName": "lieu",
+          "invert": false,
+          "selection": [
+            {
+              "v": {
+                "v": "Jeu de paume (musée)",
+                "l": "Jeu de paume (musée)"
+              }
+            },
+            {
+              "v": {
+                "v": "musée du Louvre",
+                "l": "musée du Louvre"
+              }
+            }
+          ],
+          "selectNumber": false,
+          "selectDateTime": false,
+          "selectBoolean": false,
+          "omitBlank": false,
+          "selectBlank": false,
+          "omitError": false,
+          "selectError": false
+        }
+      ],
+      "mode": "row-based"
+    },
+    "columnName": "Intitulé / Description",
+    "expression": "grel:cells[\"Pièce/Dossier\"].value",
+    "onError": "keep-original",
+    "repeat": false,
+    "repeatCount": 10
+  },
+  {
+    "op": "core/text-transform",
+    "description": "Text transform on cells in column Pièce/Dossier using expression \"\"",
+    "engineConfig": {
+      "facets": [
+        {
+          "type": "list",
+          "name": "Intitulé / Description",
+          "expression": "isBlank(value).toString()",
+          "columnName": "Intitulé / Description",
+          "invert": false,
+          "selection": [
+            {
+              "v": {
+                "v": "false",
+                "l": "false"
+              }
+            }
+          ],
+          "selectNumber": false,
+          "selectDateTime": false,
+          "selectBoolean": false,
+          "omitBlank": false,
+          "selectBlank": false,
+          "omitError": false,
+          "selectError": false
+        },
+        {
+          "type": "range",
+          "name": "Pièce/Dossier",
+          "expression": "value.length()",
+          "columnName": "Pièce/Dossier",
+          "from": 19,
+          "to": 62,
+          "selectNumeric": true,
+          "selectNonNumeric": true,
+          "selectError": true,
+          "selectBlank": true
+        }
+      ],
+      "mode": "row-based"
+    },
+    "columnName": "Pièce/Dossier",
+    "expression": "\"\"",
+    "onError": "keep-original",
+    "repeat": false,
+    "repeatCount": 10
+  },
+  {
+    "op": "core/text-transform",
+    "description": "Text transform on cells in column Intitulé / Description using expression grel:\"[\" + cells[\"lieu\"].value + \"]\"",
+    "engineConfig": {
+      "facets": [
+        {
+          "type": "list",
+          "name": "Intitulé / Description",
+          "expression": "isBlank(value).toString()",
+          "columnName": "Intitulé / Description",
+          "invert": false,
+          "selection": [
+            {
+              "v": {
+                "v": "true",
+                "l": "true"
+              }
+            }
+          ],
+          "selectNumber": false,
+          "selectDateTime": false,
+          "selectBoolean": false,
+          "omitBlank": false,
+          "selectBlank": false,
+          "omitError": false,
+          "selectError": false
+        }
+      ],
+      "mode": "row-based"
+    },
+    "columnName": "Intitulé / Description",
+    "expression": "grel:\"[\" + cells[\"lieu\"].value + \"]\"",
+    "onError": "keep-original",
+    "repeat": false,
+    "repeatCount": 10
+  },
+  {
+    "op": "core/column-addition",
+    "description": "Create column geoloc at index 11 based on column lieu using expression grel:value + \", France\"",
+    "engineConfig": {
+      "facets": [],
+      "mode": "record-based"
+    },
+    "newColumnName": "geoloc",
+    "columnInsertIndex": 11,
+    "baseColumnName": "lieu",
+    "expression": "grel:value + \", France\"",
+    "onError": "set-to-blank"
+  },
+  {
+    "op": "core/text-transform",
+    "description": "Text transform on cells in column JPG dernière image using expression grel:value.replace(\".jpg\",\"\")",
+    "engineConfig": {
+      "facets": [],
+      "mode": "record-based"
+    },
+    "columnName": "JPG dernière image",
+    "expression": "grel:value.replace(\".jpg\",\"\")",
+    "onError": "keep-original",
+    "repeat": false,
+    "repeatCount": 10
+  },
+  {
+    "op": "core/column-split",
+    "description": "Split column coordonnées géographiques by separator",
+    "engineConfig": {
+      "facets": [
+        {
+          "type": "list",
+          "name": "coordonnées géographiques",
+          "expression": "isBlank(value).toString()",
+          "columnName": "coordonnées géographiques",
+          "invert": false,
+          "selection": [
+            {
+              "v": {
+                "v": "false",
+                "l": "false"
+              }
+            }
+          ],
+          "selectNumber": false,
+          "selectDateTime": false,
+          "selectBoolean": false,
+          "omitBlank": false,
+          "selectBlank": false,
+          "omitError": false,
+          "selectError": false
+        }
+      ],
+      "mode": "record-based"
+    },
+    "columnName": "coordonnées géographiques",
+    "guessCellType": true,
+    "removeOriginalColumn": false,
+    "mode": "separator",
+    "separator": ",",
+    "regex": false,
+    "maxColumns": 0
+  },
+  {
+    "op": "core/column-rename",
+    "description": "Rename column coordonnées géographiques 1 to lat",
+    "oldColumnName": "coordonnées géographiques 1",
+    "newColumnName": "lat"
+  },
+  {
+    "op": "core/column-rename",
+    "description": "Rename column coordonnées géographiques 2 to lon",
+    "oldColumnName": "coordonnées géographiques 2",
+    "newColumnName": "lon"
+  },
+  {
+    "op": "wikidata/save-wikibase-schema",
+    "description": "Save Wikibase schema",
+    "schema": {
+      "itemDocuments": [
+        {
+          "subject": {
+            "type": "wbitemvariable",
+            "columnName": "photographe"
+          },
+          "statementGroups": [
+            {
+              "property": {
+                "datatype": "wikibase-item",
+                "pid": "P485",
+                "label": "archivé par",
+                "type": "wbpropconstant"
+              },
+              "statements": [
+                {
+                  "references": [],
+                  "qualifiers": [],
+                  "value": {
+                    "label": "Archives nationales",
+                    "type": "wbitemconstant",
+                    "qid": "Q182542"
+                  }
+                }
+              ]
+            }
+          ],
+          "nameDescs": []
+        }
+      ]
+    }
+  },
+  {
+    "op": "wikidata/save-wikibase-schema",
+    "description": "Save Wikibase schema",
+    "schema": {
+      "itemDocuments": [
+        {
+          "subject": {
+            "type": "wbitemvariable",
+            "columnName": "photographe"
+          },
+          "statementGroups": [
+            {
+              "property": {
+                "datatype": "wikibase-item",
+                "pid": "P485",
+                "label": "archivé par",
+                "type": "wbpropconstant"
+              },
+              "statements": [
+                {
+                  "references": [],
+                  "qualifiers": [
+                    {
+                      "prop": {
+                        "datatype": "string",
+                        "pid": "P217",
+                        "label": "numéro d'inventaire",
+                        "type": "wbpropconstant"
+                      },
+                      "value": {
+                        "type": "wbstringvariable",
+                        "columnName": "Cote"
+                      }
+                    }
+                  ],
+                  "value": {
+                    "label": "Archives nationales",
+                    "type": "wbitemconstant",
+                    "qid": "Q182542"
+                  }
+                }
+              ]
+            }
+          ],
+          "nameDescs": []
+        }
+      ]
+    }
+  },
+  {
+    "op": "core/column-addition",
+    "description": "Create column lien_image at index 23 based on column JPG première image using expression grel:\"https://www.siv.archives-nationales.culture.gouv.fr/mm/media/download/\" + value + \"-medium.jpg\"",
+    "engineConfig": {
+      "facets": [
+        {
+          "type": "list",
+          "name": "photographe",
+          "expression": "isBlank(value).toString()",
+          "columnName": "photographe",
+          "invert": false,
+          "selection": [
+            {
+              "v": {
+                "v": "false",
+                "l": "false"
+              }
+            }
+          ],
+          "selectNumber": false,
+          "selectDateTime": false,
+          "selectBoolean": false,
+          "omitBlank": false,
+          "selectBlank": false,
+          "omitError": false,
+          "selectError": false
+        },
+        {
+          "type": "list",
+          "name": "photographe: judgment",
+          "expression": "forNonBlank(cell.recon.judgment, v, v, if(isNonBlank(value), \"(unreconciled)\", \"(blank)\"))",
+          "columnName": "photographe",
+          "invert": false,
+          "selection": [
+            {
+              "v": {
+                "v": "matched",
+                "l": "matched"
+              }
+            }
+          ],
+          "selectNumber": false,
+          "selectDateTime": false,
+          "selectBoolean": false,
+          "omitBlank": false,
+          "selectBlank": false,
+          "omitError": false,
+          "selectError": false
+        }
+      ],
+      "mode": "record-based"
+    },
+    "newColumnName": "lien_image",
+    "columnInsertIndex": 23,
+    "baseColumnName": "JPG première image",
+    "expression": "grel:\"https://www.siv.archives-nationales.culture.gouv.fr/mm/media/download/\" + value + \"-medium.jpg\"",
+    "onError": "set-to-blank"
+  },
+  {
+    "op": "wikidata/save-wikibase-schema",
+    "description": "Save Wikibase schema",
+    "schema": {
+      "itemDocuments": [
+        {
+          "subject": {
+            "type": "wbitemvariable",
+            "columnName": "photographe"
+          },
+          "statementGroups": [
+            {
+              "property": {
+                "datatype": "wikibase-item",
+                "pid": "P485",
+                "label": "archivé par",
+                "type": "wbpropconstant"
+              },
+              "statements": [
+                {
+                  "references": [
+                    {
+                      "snaks": [
+                        {
+                          "prop": {
+                            "datatype": "url",
+                            "pid": "P854",
+                            "label": "URL de la référence",
+                            "type": "wbpropconstant"
+                          },
+                          "value": {
+                            "type": "wbstringvariable",
+                            "columnName": "lien_image"
+                          }
+                        },
+                        {
+                          "prop": {
+                            "datatype": "time",
+                            "pid": "P813",
+                            "label": "date de consultation",
+                            "type": "wbpropconstant"
+                          },
+                          "value": {
+                            "type": "wbdateconstant",
+                            "value": "2019-04-03"
+                          }
+                        }
+                      ]
+                    }
+                  ],
+                  "qualifiers": [
+                    {
+                      "prop": {
+                        "datatype": "string",
+                        "pid": "P217",
+                        "label": "numéro d'inventaire",
+                        "type": "wbpropconstant"
+                      },
+                      "value": {
+                        "type": "wbstringvariable",
+                        "columnName": "Cote"
+                      }
+                    }
+                  ],
+                  "value": {
+                    "label": "Archives nationales",
+                    "type": "wbitemconstant",
+                    "qid": "Q182542"
+                  }
+                }
+              ]
+            }
+          ],
+          "nameDescs": []
+        }
+      ]
+    }
+  }
+]

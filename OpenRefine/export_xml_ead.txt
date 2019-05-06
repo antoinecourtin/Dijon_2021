@@ -1,0 +1,32 @@
+<c id={{jsonize(cells["N°"].value)}}>
+
+ <did>
+ <unitid type="cote-de-consultation">{{jsonize(cells["Cote"].value).replace('"', '')}}</unitid>
+ <unitid type="pieces">{{jsonize(cells["Pièce/Dossier"].value).replace('"', '')}}</unitid>
+ <unittitle>{{jsonize(cells["Intitulé / Description"].value).replace('"', '')}}
+ </unittitle>
+ <unitdate calendar="gregorian" era="ce" normal="{{jsonize(cells["annee"].value).replace('"', '')}}/01-01/{{jsonize(cells["annee"].value).replace('"', '')}}-12-31" >{{jsonize(cells["annee"].value).replace('"', '')}}
+ </unitdate>
+ 
+<physdesc>
+ <extent>{{jsonize(cells["Support / typologie"].value).replace('"', '')}}
+ </extent>
+<physfacet>{{jsonize(cells["dimensions"].value).replace('"', '')}} cm</physfacet>
+ </physdesc>
+ </did>
+
+<scopecontent>
+ <p>Photographe : {{jsonize(cells["photographe"].value).replace('"', '')}} 
+ </p>
+</scopecontent>
+
+  <daogrp>
+        <daoloc href="{{jsonize(cells["JPG première image"].value).replace('"', '')}}.msp# {{jsonize(cells["JPG dernière image"].value).replace('"', '')}}.msp"/>
+       </daogrp>
+
+<controlaccess>
+<persname>{{jsonize(cells["photographe"].value).replace('"', '')}}</persname>
+<geogname>{{jsonize(cells["lieu"].value).replace('"', '')}}</geogname>
+
+</controlaccess>
+</c>
