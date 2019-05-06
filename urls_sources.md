@@ -103,3 +103,9 @@
   * https://digitalmontagny.inha.fr/fr
   * http://bibliotheque-numerique.inha.fr/
   * http://journals.openedition.org/inha/
+  * http://winckelmann.expositions.inha.fr
+  * https://skylab.inha.fr/omeka-sv1/s/digital-muret-b-ta/page/accueil
+  * https://demo.sempiternelia.com/inha/s/omci/item/650
+  * https://inhaparis.github.io/Les-envois-de-Rome_v1/
+  * https://www.zooniverse.org/projects/inha/digital-muret
+  * https://datastudio.google.com/u/0/reporting/0B8BE3WZ6mXpUNGJrbEp6dFowY3M/page/CrLH
