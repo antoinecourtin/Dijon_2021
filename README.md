@@ -3,7 +3,7 @@
 
 Rassemble à la fois des fichiers markdown avec des trucs & astuces par thématique/outils mais également des fichiers de données pour des tests sous différents formats ainsi que le support de présentation.
 
-* [prez_dijon_20180329.mdf](/prez_dijon_201907059.pdf) [BIENTÔT disponible :smirk:]
+* [prez_dijon_20190507.mdf](/prez_dijon_20190507.pdf) [BIENTÔT disponible :smirk:]
   * support de cours au format PDF
 * [urls_sources.md](/urls_sources.md)
   * liste l'ensemble des URLS, des projets, outils, ressources évoquées pendant le cours.
