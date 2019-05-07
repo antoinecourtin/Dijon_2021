@@ -11,6 +11,11 @@
   * appeler dans le SELECT, votre variable + Label : exemple pour la variable inconnu ````?titre````, il faut écrire ````?titreLabel````
   * ajouter à votre requête dans les { } du WHERE ````SERVICE wikibase:label { bd:serviceParam wikibase:language "en" . ````
 
+### Wikidata et les annotation avec IIIF (et visualisation via Mirador)
+
+* URL de base : https://tools.wmflabs.org/mirador/?manifest=https://tools.wmflabs.org/wd-image-positions/iiif/Q???/P18/manifest.json
+* Mettre à la place de ???, 'élément d'une oeuvre de votre choix pour qui P18 a été renseignée * Dans Mirador, cliquer sur les petites bulles pour les zones
+* exemple de Q à utiliser : 1231009 ; 14619165 ; 21013224 
 
 ### Quelques exemples de requêtes SPARQL
 

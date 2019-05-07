@@ -66,6 +66,7 @@
   * http://waddesdon-bequest.herokuapp.com/
   * http://www.essentialvermeer.com/vermeer_in_scale_one.htm
   * https://medium.com/@seeksanusername/astuce1-r%C3%A9cup%C3%A9rer-de-la-hd-sur-gallica-bef0a6cc7f89
+  * 
 
 * sphère wikidata
   * http://wikidata.org
