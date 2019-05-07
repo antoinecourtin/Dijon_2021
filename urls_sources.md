@@ -66,7 +66,7 @@
   * http://waddesdon-bequest.herokuapp.com/
   * http://www.essentialvermeer.com/vermeer_in_scale_one.htm
   * https://medium.com/@seeksanusername/astuce1-r%C3%A9cup%C3%A9rer-de-la-hd-sur-gallica-bef0a6cc7f89
-  * 
+  *
 
 * sphère wikidata
   * http://wikidata.org
@@ -100,7 +100,7 @@
   * https://portail3d-conques.inha.fr
   * https://ventesdantiques.inha.fr/
   * https://agorha.inha.fr
-  * https://www.inha.fr/fr/recherche/programmation-scientifique/en-2017-2018/les-lundis-numeriques-2017-2018.html
+  * https://www.inha.fr/fr/recherche/programmation-scientifique/en-2018-2019/les-lundis-numeriques-2018-2019.html
   * https://digitalmontagny.inha.fr/fr
   * http://bibliotheque-numerique.inha.fr/
   * http://journals.openedition.org/inha/
