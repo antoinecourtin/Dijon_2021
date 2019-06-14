@@ -3,7 +3,7 @@
 
 Rassemble à la fois des fichiers markdown avec des trucs & astuces par thématique/outils mais également des fichiers de données pour des tests sous différents formats ainsi que le support de présentation.
 
-* [20190507_Dijon.pdf](/Dijon_20180329.pdf) [Dispo ! :smirk:]
+* [20190507_Dijon.pdf](/20190507_Dijon.pdf) [Dispo ! :smirk:]
   * support de cours au format PDF
 * [urls_sources.md](/urls_sources.md)
   * liste l'ensemble des URLS, des projets, outils, ressources évoquées pendant le cours.
