@@ -1,4 +1,4 @@
-# Dijon_2019
+# Dijon_2020
 ## Ce que font (ou non) les **données** à la pratiques de l’histoire de l’art:  intervention du 19 février 2020 à l'Université de Dijon.
 
 Rassemble à la fois des fichiers markdown avec des trucs & astuces par thématique/outils mais également des fichiers de données pour des tests sous différents formats ainsi que le support de présentation.
