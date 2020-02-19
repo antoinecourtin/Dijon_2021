@@ -3,6 +3,7 @@
 
 Rassemble à la fois des fichiers markdown avec des trucs & astuces par thématique/outils mais également des fichiers de données pour des tests sous différents formats ainsi que le support de présentation.
 
+**Le support de présentation est à télécharger avant le 20 mars 2020 à cette adresse : https://filesender.renater.fr/?s=download&token=efaddc43-76f6-7131-fcac-08e00bf62d5e **
 * [urls_sources.md](/urls_sources.md)
   * liste l'ensemble des URLS, des projets, outils, ressources évoquées pendant le cours.
 * [helpful_tips_wikidata.md](/wikidata/helpful_tips_wikidata.md)
