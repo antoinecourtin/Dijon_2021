@@ -1,4 +1,4 @@
-# Quelques trucs utiles pour les cours du CNAM de 2018
+# Quelques trucs utiles pour wikidata
 
 ## Wikidata
 
