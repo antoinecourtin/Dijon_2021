@@ -9,6 +9,7 @@
 
 * projets *DAH*
   * http://burckhardtsource.org/
+  * https://teipublisher.com/exist/apps/vangogh/index.html
   * http://artlas.ens.fr/fr/database/
   * http://ukiyo-e.org/
   * https://www.moma.org/interactives/exhibitions/2012/inventingabstraction/?page=connections
@@ -25,6 +26,8 @@
   * http://visualizingvisions.com/  
   * http://publicartmuseum.net/
   * http://www.projectcornelia.be/
+  * https://vikusviewer.fh-potsdam.de/vangogh/
+  * https://villachiragan.saintraymond.toulouse.fr/
   * https://dhlab.epfl.ch/page-128334-en.html
   * http://archipedie.citedelarchitecture.fr/
 
