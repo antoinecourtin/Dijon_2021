@@ -102,13 +102,14 @@
   * https://heuresitaliennes-hautsdefrance.inha.fr/
   * https://portail3d-conques.inha.fr
   * https://ventesdantiques.inha.fr/
+  * [AuCase](http://aucase.inha.fr/) : Auction Catalog Segmentation 
   * https://agorha.inha.fr
   * https://www.inha.fr/fr/recherche/programmation-scientifique/en-2018-2019/les-lundis-numeriques-2018-2019.html
   * https://digitalmontagny.inha.fr/fr
   * http://bibliotheque-numerique.inha.fr/
   * http://journals.openedition.org/inha/
   * http://winckelmann.expositions.inha.fr
-  * https://skylab.inha.fr/omeka-sv1/s/digital-muret-b-ta/page/accueil
+  * [Digital Muret](digital.inha.fr/) : réalisée avec omeka-s
   * https://demo.sempiternelia.com/inha/s/omci/item/650
   * https://inhaparis.github.io/Les-envois-de-Rome_v1/
   * https://www.zooniverse.org/projects/inha/digital-muret
